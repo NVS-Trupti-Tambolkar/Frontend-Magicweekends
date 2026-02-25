@@ -4,7 +4,7 @@ import api from '../../services/Axios';
 import { FaStar, FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUsers, FaCheck, FaArrowLeft, FaShareAlt, FaHeart, FaPhone, FaEnvelope, FaFacebook, FaInstagram, FaTwitter, FaArrowRight, FaArrowLeft as FaLeftArrow, FaExpand, FaTimes, FaUtensils, FaBed, FaEdit, FaChevronUp, FaChevronDown, FaPlus, FaTrash } from 'react-icons/fa';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import { PageLoader } from '../common/LoadingSpinner';
+import { PageLoader, OverlayLoader } from '../common/LoadingSpinner';
 import BookingForm from '../booking/BookingForm';
 
 const TravelDetailPage = () => {
@@ -21,6 +21,8 @@ const TravelDetailPage = () => {
   const [editingItinerary, setEditingItinerary] = useState(null);
   const [showItineraryModal, setShowItineraryModal] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [updateMessage, setUpdateMessage] = useState('Saving...');
 
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -291,49 +293,89 @@ const TravelDetailPage = () => {
 
   const handleItineraryUpdate = async (updatedItinerary) => {
     try {
+      setUpdating(true);
+      setUpdateMessage(updatedItinerary.itinerary_id ? 'Updating Itinerary...' : 'Adding Itinerary...');
+
       let response;
-      if (updatedItinerary.id) {
+      if (updatedItinerary.itinerary_id) {
         // Update existing
         response = await api.put('/Itineraries/updateItinerary', updatedItinerary);
       } else {
         // Add new
-        // The backend insertItineraries expects an array of itineraries
-        response = await api.post('/Itineraries/itineraries', {
+        response = await api.post('/Itineraries/insertItineraries', {
           trip_id: id,
+          trip_type: tripType,
           itineraries: [{
             day_number: updatedItinerary.day_number,
             day_title: updatedItinerary.day_title,
             description: updatedItinerary.description,
             meals: updatedItinerary.meals,
             accommodation: updatedItinerary.accommodation,
-            activities: updatedItinerary.activities
+            activities: Array.isArray(updatedItinerary.activities) ? updatedItinerary.activities.join(', ') : updatedItinerary.activities
           }]
         });
       }
 
       if (response.data.success) {
-        alert(updatedItinerary.id ? 'Itinerary updated successfully!' : 'Itinerary added successfully!');
+        // Re-fetch trip details to update the UI without full reload
+        const tripEndpoint = tripType === 'weekend'
+          ? `/WeekendTrip/getWeekendTripById?id=${id}`
+          : `/Trip/getTripById?id=${id}`;
+
+        const tripResp = await api.get(tripEndpoint);
+        if (tripResp.data.success) {
+          const tripData = tripResp.data.data;
+
+          // Re-fetch itineraries
+          const itinResp = await api.get(`/Itinerary/getItinerariesByTrip?trip_id=${id}&type=${tripType}`);
+          if (itinResp.data.success) {
+            const updatedItinData = itinResp.data.data.map(item => ({
+              id: item.itinerary_id,
+              day: item.day_number,
+              date: `Day ${item.day_number}`,
+              title: item.day_title || `Day ${item.day_number}`,
+              activities: item.activities ? item.activities.split(',').map(a => a.trim()) : [],
+              meals: item.meals || '',
+              accommodation: item.accommodation || '',
+              description: item.description || ''
+            }));
+
+            setTravelPackage(prev => ({
+              ...prev,
+              itinerary: updatedItinData
+            }));
+          }
+        }
+
         setShowItineraryModal(false);
         setEditingItinerary(null);
-        window.location.reload();
       }
     } catch (error) {
       console.error('Error saving itinerary:', error);
       alert('Failed to save itinerary.');
+    } finally {
+      setUpdating(false);
     }
   };
 
   const handleDeleteItinerary = async (itineraryId) => {
     if (window.confirm('Are you sure you want to delete this itinerary day?')) {
       try {
+        setUpdating(true);
+        setUpdateMessage('Deleting Itinerary...');
         const response = await api.delete(`/Itineraries/deleteItinerary?itinerary_id=${itineraryId}`);
         if (response.data.success) {
-          alert('Itinerary deleted successfully!');
-          window.location.reload();
+          // Update local state instead of reload
+          setTravelPackage(prev => ({
+            ...prev,
+            itinerary: prev.itinerary.filter(item => item.id !== itineraryId)
+          }));
         }
       } catch (error) {
         console.error('Error deleting itinerary:', error);
         alert('Failed to delete itinerary.');
+      } finally {
+        setUpdating(false);
       }
     }
   };
@@ -426,6 +468,7 @@ const TravelDetailPage = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header scrolled={true} />
+      {updating && <OverlayLoader message={updateMessage} />}
 
       {/* Hero Section with Image Gallery */}
       <section className="relative h-[40vh] sm:h-[45vh] md:h-[50vh] lg:h-[60vh] overflow-hidden">

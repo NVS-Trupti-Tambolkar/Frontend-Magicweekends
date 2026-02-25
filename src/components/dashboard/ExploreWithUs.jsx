@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaPlus, FaTimes, FaSearch, FaFilter, FaMapMarkerAlt, FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/Axios';
-import { SkeletonGrid } from '../common/LoadingSpinner';
+import { SkeletonGrid, OverlayLoader } from '../common/LoadingSpinner';
 
 const ExploreWithUs = () => {
     const [hoveredDestination, setHoveredDestination] = useState(null);
@@ -11,6 +11,8 @@ const ExploreWithUs = () => {
     const [tripImages, setTripImages] = useState({}); // Store blob URLs for trip images
     const [destinations, setDestinations] = useState([]); // Initialized as empty array to rely on API
     const [loading, setLoading] = useState(true);
+    const [updating, setUpdating] = useState(false);
+    const [updateMessage, setUpdateMessage] = useState('Saving...');
 
     const [destinationImagePreview, setDestinationImagePreview] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -186,14 +188,23 @@ const ExploreWithUs = () => {
         e.stopPropagation(); // Prevent card click
         if (window.confirm("Are you sure you want to delete this trip?")) {
             try {
+                setUpdating(true);
+                setUpdateMessage('Deleting Trip...');
                 const response = await api.delete('/Trip/deleteTrip', { data: { id } });
                 if (response.data.success) {
-                    alert('Trip deleted successfully');
+                    // Also delete itineraries
+                    try {
+                        await api.delete(`/Itineraries/deleteByTrip?trip_id=${id}&trip_type=normal`);
+                    } catch (itinErr) {
+                        console.error("Error deleting itineraries for trip:", itinErr);
+                    }
                     fetchTrips();
                 }
             } catch (error) {
                 console.error("Error deleting trip:", error);
                 alert("Failed to delete trip");
+            } finally {
+                setUpdating(false);
             }
         }
     };
@@ -269,6 +280,8 @@ const ExploreWithUs = () => {
         }
 
         try {
+            setUpdating(true);
+            setUpdateMessage(isEditing ? 'Updating Destination...' : 'Creating Destination...');
             // Create FormData for multipart/form-data submission
             const formData = new FormData();
             formData.append('title', newDestination.title);
@@ -308,26 +321,29 @@ const ExploreWithUs = () => {
             }
 
             if (response.data.success) {
-                const tripId = response.data.data.id;
+                const tripId = isEditing ? currentTripId : response.data.data.id;
 
                 // Save Itineraries
                 if (newDestination.itineraries.length > 0) {
                     try {
+                        setUpdateMessage('Saving Itineraries...');
                         // If it's an edit, delete existing ones first for a clean update
                         if (isEditing) {
-                            await api.delete(`/Itineraries/deleteByTrip?trip_id=${tripId}`);
+                            await api.delete(`/Itineraries/deleteByTrip?trip_id=${tripId}&trip_type=normal`);
                         }
 
                         await api.post('/Itineraries/itineraries', {
                             trip_id: tripId,
-                            itineraries: newDestination.itineraries
+                            trip_type: 'normal',
+                            itineraries: newDestination.itineraries.map(item => ({
+                                ...item,
+                                activities: Array.isArray(item.activities) ? item.activities.join(', ') : item.activities
+                            }))
                         });
                     } catch (itinError) {
                         console.error('Error saving itineraries:', itinError);
                     }
                 }
-
-                alert(isEditing ? 'Trip updated successfully!' : 'Trip added successfully!');
 
                 // Refresh trips list
                 await fetchTrips();
@@ -347,7 +363,6 @@ const ExploreWithUs = () => {
                     things_to_carry: '',
                     max_group_size: '',
                     age_limit: '',
-                    age_limit: '',
                     status: true,
                     itineraries: [
                         { day_number: 1, day_title: '', description: '', meals: '', accommodation: '', activities: '' }
@@ -361,6 +376,8 @@ const ExploreWithUs = () => {
         } catch (error) {
             console.error(isEditing ? 'Error updating trip:' : 'Error adding trip:', error);
             alert(isEditing ? 'Failed to update trip.' : 'Failed to add trip. Please try again.');
+        } finally {
+            setUpdating(false);
         }
     };
 
@@ -380,6 +397,7 @@ const ExploreWithUs = () => {
 
     return (
         <section id="explore" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white">
+            {updating && <OverlayLoader message={updateMessage} />}
             <div className="max-w-8xl mx-auto">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-10 border-b border-gray-100 pb-4 sm:pb-6">

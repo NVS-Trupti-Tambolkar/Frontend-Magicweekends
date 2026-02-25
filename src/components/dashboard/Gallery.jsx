@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaPlus, FaTimes, FaEdit, FaTrash, FaSearchPlus, FaSearchMinus } from 'react-icons/fa';
 import api, { postRequest } from '../../services/Axios';
+import { OverlayLoader } from '../common/LoadingSpinner';
 
 const Gallery = () => {
     const [showAddForm, setShowAddForm] = useState(false);
@@ -20,6 +21,8 @@ const Gallery = () => {
     const [imagePreviews, setImagePreviews] = useState([]);
     const [isMobile, setIsMobile] = useState(false);
     const [cardWidth, setCardWidth] = useState(0);
+    const [updating, setUpdating] = useState(false);
+    const [updateMessage, setUpdateMessage] = useState('Saving...');
 
     const [newGallery, setNewGallery] = useState({
         trip_id: '',
@@ -220,15 +223,18 @@ const Gallery = () => {
 
         if (window.confirm("Are you sure you want to delete this specific image?")) {
             try {
+                setUpdating(true);
+                setUpdateMessage('Deleting Image...');
                 const response = await api.delete(`/Gallery/deleteGalleryById?gallery_id=${imageId}`);
                 if (response.data.success) {
-                    alert('Image deleted successfully');
                     setLightboxOpen(false);
                     fetchData();
                 }
             } catch (error) {
                 console.error('Error deleting image:', error);
                 alert('Failed to delete image');
+            } finally {
+                setUpdating(false);
             }
         }
     };
@@ -260,11 +266,12 @@ const Gallery = () => {
         }
 
         try {
+            setUpdating(true);
+            setUpdateMessage('Updating Image...');
             const response = await api.put('/Gallery/updateGalleryById', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             if (response.data.success) {
-                alert('Image updated successfully');
                 setIsEditingSingle(false);
                 setEditingImage(null);
                 setSelectedFiles([]);
@@ -274,20 +281,25 @@ const Gallery = () => {
         } catch (error) {
             console.error('Error updating image:', error);
             alert('Failed to update image');
+        } finally {
+            setUpdating(false);
         }
     };
 
     const handleDelete = async (gallery) => {
         if (window.confirm(`Are you sure you want to delete the gallery "${gallery.tourName}"?`)) {
             try {
+                setUpdating(true);
+                setUpdateMessage('Deleting Gallery...');
                 const response = await api.delete(`/Gallery/deleteGalleryByFolder?folder_name=${encodeURIComponent(gallery.tourName)}&trip_id=${gallery.trip_id}`);
                 if (response.data.success) {
-                    alert('Gallery deleted successfully');
                     fetchData();
                 }
             } catch (error) {
                 console.error('Error deleting gallery:', error);
                 alert('Failed to delete gallery');
+            } finally {
+                setUpdating(false);
             }
         }
     };
@@ -310,13 +322,14 @@ const Gallery = () => {
         });
 
         try {
+            setUpdating(true);
+            setUpdateMessage(isEditing ? 'Updating Gallery...' : 'Adding Gallery Photos...');
             const url = isEditing ? '/Gallery/updateGalleryByFolder' : '/Gallery/insertGallery';
             const response = isEditing
                 ? await api.put(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
                 : await postRequest(url, formData);
 
             if (response.data.success) {
-                alert(isEditing ? 'Gallery updated successfully' : 'Gallery added successfully');
                 fetchData();
                 setNewGallery({ trip_id: '', tourName: '', title: '', images: [] });
                 setImagePreviews([]);
@@ -328,6 +341,8 @@ const Gallery = () => {
         } catch (error) {
             console.error('Error saving gallery:', error);
             alert('Failed to save gallery');
+        } finally {
+            setUpdating(false);
         }
     };
 
@@ -349,6 +364,7 @@ const Gallery = () => {
 
     return (
         <section id="gallery" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white min-h-screen">
+            {updating && <OverlayLoader message={updateMessage} />}
             <div className="max-w-8xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center md:text-left mb-4 md:mb-0 text-gray-800 relative">
@@ -413,7 +429,7 @@ const Gallery = () => {
                                     <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-1 sm:mb-2">{gallery.tourName}</h3>
                                     <p className="text-gray-600 mb-3 sm:mb-4 text-sm">{gallery.title}</p>
                                     <div className="grid grid-cols-2 gap-2">
-                                        {gallery.images.map((image, index) => (
+                                        {gallery.images.slice(0, 4).map((image, index) => (
                                             <div
                                                 key={index}
                                                 className="relative overflow-hidden rounded-lg cursor-pointer group/img"
@@ -424,9 +440,15 @@ const Gallery = () => {
                                                     alt={`${gallery.title} ${index + 1}`}
                                                     className="w-full h-24 sm:h-32 object-cover transition-transform duration-500 hover:scale-110"
                                                 />
-                                                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
-                                                    <span className="text-white text-xs font-bold">View</span>
-                                                </div>
+                                                {index === 3 && gallery.images.length > 4 ? (
+                                                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center transition-all group-hover/img:bg-black/60">
+                                                        <span className="text-white text-lg font-bold">+{gallery.images.length - 4}</span>
+                                                    </div>
+                                                ) : (
+                                                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
+                                                        <span className="text-white text-xs font-bold">View</span>
+                                                    </div>
+                                                )}
                                             </div>
                                         ))}
                                     </div>

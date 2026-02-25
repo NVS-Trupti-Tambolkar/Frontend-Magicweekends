@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaPlus, FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/Axios';
-import { SkeletonGrid } from '../common/LoadingSpinner';
+import { SkeletonGrid, OverlayLoader } from '../common/LoadingSpinner';
 
 const WeekendTrips = () => {
     const navigate = useNavigate();
@@ -13,6 +13,8 @@ const WeekendTrips = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [currentTripId, setCurrentTripId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [updating, setUpdating] = useState(false);
+    const [updateMessage, setUpdateMessage] = useState('Saving...');
 
     const scrollContainerRef = useRef(null);
     const [imagePreview, setImagePreview] = useState(null);
@@ -189,6 +191,9 @@ const WeekendTrips = () => {
         }
 
         try {
+            setUpdating(true);
+            setUpdateMessage(isEditing ? 'Updating Weekend Trip...' : 'Creating Weekend Trip...');
+
             const formData = new FormData();
             formData.append('title', newTrip.title);
             formData.append('duration', newTrip.duration);
@@ -225,32 +230,38 @@ const WeekendTrips = () => {
             }
 
             if (response.data.success) {
-                const tripId = response.data.data.id;
+                const tripId = isEditing ? currentTripId : response.data.data.id;
 
                 // Save Itineraries
                 if (newTrip.itineraries.length > 0) {
                     try {
+                        setUpdateMessage('Saving Itineraries...');
                         // If it's an edit, delete existing ones first for a clean update
                         if (isEditing) {
-                            await api.delete(`/Itineraries/deleteByTrip?trip_id=${tripId}`);
+                            await api.delete(`/Itineraries/deleteByTrip?trip_id=${tripId}&trip_type=weekend`);
                         }
 
                         await api.post('/Itineraries/itineraries', {
                             trip_id: tripId,
-                            itineraries: newTrip.itineraries
+                            trip_type: 'weekend',
+                            itineraries: newTrip.itineraries.map(item => ({
+                                ...item,
+                                activities: Array.isArray(item.activities) ? item.activities.join(', ') : item.activities
+                            }))
                         });
                     } catch (itinError) {
                         console.error('Error saving itineraries:', itinError);
                     }
                 }
 
-                alert(isEditing ? 'Trip updated successfully!' : 'Trip added successfully!');
                 await fetchTrips();
                 resetForm();
             }
         } catch (error) {
             console.error('Error saving trip:', error);
             alert('Failed to save trip. Please try again.');
+        } finally {
+            setUpdating(false);
         }
     };
 
@@ -340,14 +351,23 @@ const WeekendTrips = () => {
         e.stopPropagation();
         if (window.confirm("Are you sure you want to delete this weekend trip?")) {
             try {
+                setUpdating(true);
+                setUpdateMessage('Deleting Weekend Trip...');
                 const response = await api.delete('/WeekendTrip/deleteWeekendTrip', { data: { id } });
                 if (response.data.success) {
-                    alert('Trip deleted successfully');
-                    fetchTrips();
+                    // Also delete itineraries
+                    try {
+                        await api.delete(`/Itineraries/deleteByTrip?trip_id=${id}&trip_type=weekend`);
+                    } catch (itinErr) {
+                        console.error("Error deleting itineraries for trip:", itinErr);
+                    }
+                    await fetchTrips();
                 }
             } catch (error) {
                 console.error("Error deleting trip:", error);
                 alert("Failed to delete trip");
+            } finally {
+                setUpdating(false);
             }
         }
     };
@@ -370,6 +390,7 @@ const WeekendTrips = () => {
 
     return (
         <section id="weekend-trips" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white">
+            {updating && <OverlayLoader message={updateMessage} />}
             <div className="max-w-8xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12">
                     <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center md:text-left mb-4 md:mb-0 text-gray-800 relative">
