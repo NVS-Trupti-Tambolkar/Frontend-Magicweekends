@@ -35,7 +35,6 @@ const ExploreWithUs = () => {
         things_to_carry: '',
         max_group_size: '',
         age_limit: '',
-        age_limit: '',
         status: true,
         itineraries: [
             { day_number: 1, day_title: '', description: '', meals: '', accommodation: '', activities: '' }
@@ -50,31 +49,11 @@ const ExploreWithUs = () => {
             if (response.data.success) {
                 const tripData = response.data.data;
 
-                // Fetch images for each trip - use directly if already a URL (Cloudinary)
+                // Use Cloudinary URLs directly - no local file fetching
                 const imagePromises = tripData.map(async (trip) => {
                     const id = trip.id;
                     const imagePath = trip.uploadimage;
-
-                    if (imagePath) {
-                        if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
-                            // Already a full URL (Cloudinary)
-                            return { id, imageUrl: imagePath };
-                        }
-                        // Local file path - fetch via API
-                        try {
-                            const filePath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
-                            const imageResponse = await api.get(
-                                `/Trip/getFilepath?filePath=${encodeURIComponent(filePath)}`,
-                                { responseType: 'blob' }
-                            );
-                            const imageUrl = URL.createObjectURL(imageResponse.data);
-                            return { id, imageUrl };
-                        } catch (imageErr) {
-                            console.error(`Error fetching image for trip ${id}:`, imageErr);
-                            return { id, imageUrl: 'https://picsum.photos/seed/placeholder/600/400' };
-                        }
-                    }
-                    return { id, imageUrl: 'https://picsum.photos/seed/placeholder/600/400' };
+                    return { id, imageUrl: imagePath || 'https://picsum.photos/seed/placeholder/600/400' };
                 });
 
                 const images = await Promise.all(imagePromises);
@@ -119,8 +98,9 @@ const ExploreWithUs = () => {
 
         // Cleanup blob URLs on unmount
         return () => {
+            // Cleanup blob URLs only (not Cloudinary URLs)
             Object.values(tripImages).forEach((url) => {
-                if (url && !url.includes('picsum.photos')) {
+                if (url && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
                 }
             });
@@ -314,27 +294,19 @@ const ExploreWithUs = () => {
             // Send to API
             let response;
             if (isEditing) {
-                response = await api.put('/Trip/updateTrip', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
+                response = await api.put('/Trip/updateTrip', formData);
             } else {
-                response = await api.post('/Trip/insertTripDirect', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
+                response = await api.post('/Trip/insertTripDirect', formData);
             }
 
             if (response.data.success) {
                 const tripId = isEditing ? currentTripId : response.data.data.id;
 
-                // Save Itineraries
+                // Save Itineraries - use transaction-safe bulk insert
                 if (newDestination.itineraries.length > 0) {
                     try {
                         setUpdateMessage('Saving Itineraries...');
-                        // If it's an edit, delete existing ones first for a clean update
-                        if (isEditing) {
-                            await api.delete(`/Itineraries/deleteByTrip?trip_id=${tripId}&trip_type=normal`);
-                        }
-
+                        // Backend now handles transaction-safe upsert
                         await api.post('/Itineraries/itineraries', {
                             trip_id: tripId,
                             trip_type: 'normal',
@@ -345,6 +317,7 @@ const ExploreWithUs = () => {
                         });
                     } catch (itinError) {
                         console.error('Error saving itineraries:', itinError);
+                        alert('Trip saved but itineraries failed. Please edit the trip to add itineraries.');
                     }
                 }
 
@@ -443,7 +416,6 @@ const ExploreWithUs = () => {
                                     overview: '',
                                     things_to_carry: '',
                                     max_group_size: '',
-                                    age_limit: '',
                                     age_limit: '',
                                     status: true,
                                     itineraries: [

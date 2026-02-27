@@ -47,24 +47,9 @@ const TravelDetailPage = () => {
 
           let imageUrl = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80';
 
-          // Fetch image if exists - use directly if it's already a URL (Cloudinary)
+          // Use Cloudinary URL directly
           if (tripData.uploadimage) {
-            if (tripData.uploadimage.startsWith('http://') || tripData.uploadimage.startsWith('https://')) {
-              // Already a full URL (Cloudinary)
-              imageUrl = tripData.uploadimage;
-            } else {
-              // Local file path - fetch via API
-              try {
-                const filePath = tripData.uploadimage.startsWith('/') ? tripData.uploadimage.slice(1) : tripData.uploadimage;
-                const imageResponse = await api.get(
-                  `/Trip/getFilepath?filePath=${encodeURIComponent(filePath)}`,
-                  { responseType: 'blob' }
-                );
-                imageUrl = URL.createObjectURL(imageResponse.data);
-              } catch (imgErr) {
-                console.error('Error fetching image:', imgErr);
-              }
-            }
+            imageUrl = tripData.uploadimage;
           }
 
           // Fetch itineraries from API
@@ -153,20 +138,10 @@ const TravelDetailPage = () => {
           const images = response.data.data;
           setGalleryImages(images);
 
-          // Fetch blobs for each image - use directly if already a URL
-          images.forEach(async (img) => {
-            try {
-              if (img.image_url && (img.image_url.startsWith('http://') || img.image_url.startsWith('https://'))) {
-                // Already a full URL (Cloudinary) - use directly
-                setGalleryBlobs(prev => ({ ...prev, [img.image_url]: img.image_url }));
-              } else {
-                // Local file path - fetch via API
-                const res = await api.get(`/Trip/getFilepath?filePath=${encodeURIComponent(img.image_url)}`, { responseType: 'blob' });
-                const blobUrl = URL.createObjectURL(res.data);
-                setGalleryBlobs(prev => ({ ...prev, [img.image_url]: blobUrl }));
-              }
-            } catch (err) {
-              console.error('Error fetching gallery image blob:', err);
+          // Use Cloudinary URLs directly
+          images.forEach((img) => {
+            if (img.image_url) {
+              setGalleryBlobs(prev => ({ ...prev, [img.image_url]: img.image_url }));
             }
           });
         }
@@ -1034,38 +1009,8 @@ const SidebarSlider = ({ allTrips }) => {
 };
 
 const SliderItem = ({ trip, navigate }) => {
-  const [imageUrl, setImageUrl] = useState('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop');
-
-  useEffect(() => {
-    let blobUrl = null;
-    const fetchImage = async () => {
-      if (trip.uploadimage) {
-        try {
-          const filePath = trip.uploadimage.startsWith('/') ? trip.uploadimage.slice(1) : trip.uploadimage;
-          // Check if it's already a full URL
-          if (filePath.startsWith('http')) {
-            setImageUrl(filePath);
-            return;
-          }
-
-          const imageResponse = await api.get(
-            `/Trip/getFilepath?filePath=${encodeURIComponent(filePath)}`,
-            { responseType: 'blob' }
-          );
-          blobUrl = URL.createObjectURL(imageResponse.data);
-          setImageUrl(blobUrl);
-        } catch (imgErr) {
-          console.error('Error fetching slider image:', imgErr);
-        }
-      }
-    };
-
-    fetchImage();
-
-    return () => {
-      if (blobUrl) URL.revokeObjectURL(blobUrl);
-    };
-  }, [trip.uploadimage]);
+  // Use Cloudinary URL directly
+  const imageUrl = trip.uploadimage || 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop';
 
   return (
     <div

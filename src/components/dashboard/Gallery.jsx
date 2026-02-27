@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaPlus, FaTimes, FaEdit, FaTrash, FaSearchPlus, FaSearchMinus } from 'react-icons/fa';
-import api, { postRequest } from '../../services/Axios';
+import api, { postRequest, putRequest } from '../../services/Axios';
 import { OverlayLoader } from '../common/LoadingSpinner';
 
 const Gallery = () => {
@@ -87,44 +87,24 @@ const Gallery = () => {
 
         const uniquePaths = [...new Set(allImagePaths)];
 
-        const imagePromises = uniquePaths.map(async (path) => {
-            try {
-                if (galleryImages[path]) return { path, blobUrl: galleryImages[path] };
-                
-                // Use directly if already a URL (Cloudinary)
-                if (path.startsWith('http://') || path.startsWith('https://')) {
-                    return { path, blobUrl: path };
-                }
-                
-                // Local file path - fetch via API
-                const normalizedPath = path.replace(/\\/g, '/');
-                const response = await api.get(
-                    `/Trip/getFilepath?filePath=${encodeURIComponent(normalizedPath)}`,
-                    { responseType: 'blob' }
-                );
-                const blobUrl = URL.createObjectURL(response.data);
-                return { path, blobUrl };
-            } catch (err) {
-                console.error(`Error loading image ${path}:`, err);
-                return { path, blobUrl: null };
-            }
+        // Use Cloudinary URLs directly - no local file fetching
+        const imageMap = {};
+        uniquePaths.forEach(path => {
+            imageMap[path] = path || 'https://picsum.photos/seed/placeholder/600/400';
         });
 
-        const results = await Promise.all(imagePromises);
-        setGalleryImages(prev => {
-            const next = { ...prev };
-            results.forEach(res => {
-                if (res.blobUrl) next[res.path] = res.blobUrl;
-            });
-            return next;
-        });
+        setGalleryImages(prev => ({ ...prev, ...imageMap }));
     };
 
     useEffect(() => {
         fetchData();
         return () => {
-            // Only revoke on final unmount to prevent flickering
-            Object.values(galleryImages).forEach(url => URL.revokeObjectURL(url));
+            // Only revoke actual blob URLs, not Cloudinary URLs
+            Object.values(galleryImages).forEach(url => {
+                if (url && url.startsWith('blob:')) {
+                    URL.revokeObjectURL(url);
+                }
+            });
         };
     }, []); // Only on mount
 
@@ -274,10 +254,8 @@ const Gallery = () => {
         try {
             setUpdating(true);
             setUpdateMessage('Updating Image...');
-            const response = await api.put('/Gallery/updateGalleryById', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
-            });
-            if (response.data.success) {
+            const response = await putRequest('/Gallery/updateGalleryById', formData);
+            if (response.success) {
                 setIsEditingSingle(false);
                 setEditingImage(null);
                 setSelectedFiles([]);
@@ -332,7 +310,7 @@ const Gallery = () => {
             setUpdateMessage(isEditing ? 'Updating Gallery...' : 'Adding Gallery Photos...');
             const url = isEditing ? '/Gallery/updateGalleryByFolder' : '/Gallery/insertGallery';
             const response = isEditing
-                ? await api.put(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+                ? await putRequest(url, formData)
                 : await postRequest(url, formData);
 
             if (response.data.success) {
