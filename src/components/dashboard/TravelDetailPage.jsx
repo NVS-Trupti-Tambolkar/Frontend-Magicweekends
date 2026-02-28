@@ -55,7 +55,7 @@ const TravelDetailPage = () => {
           // Fetch itineraries from API
           let itineraryData = [];
           try {
-            const itinResp = await api.get(`/Itinerary/getItinerariesByTrip?trip_id=${id}&type=${tripType}`);
+            const itinResp = await api.get(`/Itineraries/getItinerariesByTrip?trip_id=${id}&type=${tripType}`);
             if (itinResp.data.success && itinResp.data.data.length > 0) {
               itineraryData = itinResp.data.data.map(item => ({
                 day: item.day_number,
@@ -292,6 +292,7 @@ const TravelDetailPage = () => {
         response = await api.post('/Itineraries/insertItineraries', {
           trip_id: id,
           trip_type: tripType,
+          append: true,
           itineraries: [{
             day_number: updatedItinerary.day_number,
             day_title: updatedItinerary.day_title,
@@ -303,7 +304,7 @@ const TravelDetailPage = () => {
         });
       }
 
-      if (response.data.success) {
+      if (response && response.data && response.data.success) {
         // Re-fetch trip details to update the UI without full reload
         const tripEndpoint = tripType === 'weekend'
           ? `/WeekendTrip/getWeekendTripById?id=${id}`
@@ -314,7 +315,7 @@ const TravelDetailPage = () => {
           const tripData = tripResp.data.data;
 
           // Re-fetch itineraries
-          const itinResp = await api.get(`/Itinerary/getItinerariesByTrip?trip_id=${id}&type=${tripType}`);
+          const itinResp = await api.get(`/Itineraries/getItinerariesByTrip?trip_id=${id}&type=${tripType}`);
           if (itinResp.data.success) {
             const updatedItinData = itinResp.data.data.map(item => ({
               id: item.itinerary_id,
@@ -329,7 +330,16 @@ const TravelDetailPage = () => {
 
             setTravelPackage(prev => ({
               ...prev,
-              itinerary: updatedItinData
+              itinerary: updatedItinData.length > 0 ? updatedItinData : [
+                {
+                  day: 1,
+                  date: 'Day 1',
+                  title: 'Arrival and Briefing',
+                  activities: ['Arrival at base camp', 'Welcome briefing', 'Dinner'],
+                  meals: 'Dinner',
+                  accommodation: 'Hotel/Camp'
+                }
+              ]
             }));
           }
         }

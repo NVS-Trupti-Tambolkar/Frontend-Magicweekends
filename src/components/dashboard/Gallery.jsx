@@ -101,7 +101,7 @@ const Gallery = () => {
         return () => {
             // Only revoke actual blob URLs, not Cloudinary URLs
             Object.values(galleryImages).forEach(url => {
-                if (url && url.startsWith('blob:')) {
+                if (typeof url === 'string' && url.startsWith('blob:')) {
                     URL.revokeObjectURL(url);
                 }
             });

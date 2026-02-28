@@ -39,9 +39,7 @@ const WeekendTrips = () => {
         max_group_size: '',
         age_limit: '',
         status: true,
-        itineraries: [
-            { day_number: 1, day_title: '', description: '', meals: '', accommodation: '', activities: '' }
-        ]
+        itineraries: []
     });
 
     // Detect if device is mobile and calculate card width
@@ -146,7 +144,26 @@ const WeekendTrips = () => {
         }));
     };
 
-    const removeItineraryDay = (index) => {
+    const removeItineraryDay = async (index) => {
+        const itemToRemove = newTrip.itineraries[index];
+
+        if (isEditing && itemToRemove.itinerary_id) {
+            if (window.confirm("Are you sure you want to delete this itinerary day? This cannot be undone.")) {
+                try {
+                    setUpdating(true);
+                    setUpdateMessage('Deleting itinerary day...');
+                    await api.delete(`/Itineraries/deleteItinerary?itinerary_id=${itemToRemove.itinerary_id}`);
+                } catch (error) {
+                    console.error("Failed to delete itinerary day", error);
+                    alert("Failed to delete itinerary day");
+                } finally {
+                    setUpdating(false);
+                }
+            } else {
+                return; // User cancelled
+            }
+        }
+
         setNewTrip(prev => {
             const updated = prev.itineraries.filter((_, i) => i !== index);
             // Re-order day numbers
@@ -183,7 +200,7 @@ const WeekendTrips = () => {
             const formData = new FormData();
             formData.append('title', newTrip.title);
             formData.append('duration', newTrip.duration);
-            formData.append('tours', newTrip.tours);
+            formData.append('tours', parseInt(newTrip.tours) || 0);
             formData.append('price', newTrip.price);
             formData.append('difficulty', newTrip.difficulty);
             formData.append('highlights', newTrip.highlights);
@@ -192,7 +209,7 @@ const WeekendTrips = () => {
             formData.append('to_location', newTrip.to_location);
             formData.append('overview', newTrip.overview);
             formData.append('things_to_carry', newTrip.things_to_carry);
-            formData.append('max_group_size', newTrip.max_group_size);
+            formData.append('max_group_size', parseInt(newTrip.max_group_size) || 0);
             formData.append('age_limit', newTrip.age_limit);
             formData.append('status', newTrip.status);
 
@@ -214,22 +231,59 @@ const WeekendTrips = () => {
             if (response.data.success) {
                 const tripId = isEditing ? currentTripId : response.data.data.id;
 
-                // Save Itineraries - use transaction-safe bulk insert
-                if (newTrip.itineraries.length > 0) {
+                // Save Itineraries
+                const validItinsToSave = newTrip.itineraries.filter(it => 
+                    (it.day_title && it.day_title.trim() !== '') || 
+                    (it.description && it.description.trim() !== '')
+                );
+
+                if (validItinsToSave.length > 0) {
                     try {
                         setUpdateMessage('Saving Itineraries...');
-                        // Backend now handles transaction-safe upsert
-                        await api.post('/Itineraries/itineraries', {
-                            trip_id: tripId,
-                            trip_type: 'weekend',
-                            itineraries: newTrip.itineraries.map(item => ({
-                                ...item,
-                                activities: Array.isArray(item.activities) ? item.activities.join(', ') : item.activities
-                            }))
-                        });
+                        if (isEditing) {
+                            // Update existing itineraries and insert new ones
+                            const existingItins = validItinsToSave.filter(it => it.itinerary_id);
+                            const newItins = validItinsToSave.filter(it => !it.itinerary_id);
+
+                            // 1. Update existing individually
+                            for (const it of existingItins) {
+                                await api.put('/Itineraries/updateItinerary', {
+                                    itinerary_id: it.itinerary_id,
+                                    day_number: it.day_number,
+                                    day_title: it.day_title,
+                                    description: it.description,
+                                    meals: it.meals,
+                                    accommodation: it.accommodation,
+                                    activities: Array.isArray(it.activities) ? it.activities.join(', ') : it.activities
+                                });
+                            }
+
+                            // 2. Insert new itineraries
+                            if (newItins.length > 0) {
+                                await api.post('/Itineraries/insertItineraries', {
+                                    trip_id: tripId,
+                                    trip_type: 'weekend',
+                                    append: true,
+                                    itineraries: newItins.map(item => ({
+                                        ...item,
+                                        activities: Array.isArray(item.activities) ? item.activities.join(', ') : item.activities
+                                    }))
+                                });
+                            }
+                        } else {
+                            // Fresh insert
+                            await api.post('/Itineraries/insertItineraries', {
+                                trip_id: tripId,
+                                trip_type: 'weekend',
+                                itineraries: validItinsToSave.map(item => ({
+                                    ...item,
+                                    activities: Array.isArray(item.activities) ? item.activities.join(', ') : item.activities
+                                }))
+                            });
+                        }
                     } catch (itinError) {
                         console.error('Error saving itineraries:', itinError);
-                        alert('Trip saved but itineraries failed. Please edit the trip to add itineraries.');
+                        alert('Trip saved but some itineraries failed. Please edit the trip to verify itineraries.');
                     }
                 }
 
@@ -261,9 +315,7 @@ const WeekendTrips = () => {
             max_group_size: '',
             age_limit: '',
             status: true,
-            itineraries: [
-                { day_number: 1, day_title: '', description: '', meals: '', accommodation: '', activities: '' }
-            ]
+            itineraries: []
         });
         setImagePreview(null);
         setShowAddForm(false);
@@ -271,11 +323,32 @@ const WeekendTrips = () => {
         setCurrentTripId(null);
     };
 
-    const handleEdit = (e, trip) => {
+    const handleEdit = async (e, trip) => {
         e.stopPropagation();
         setIsEditing(true);
         setCurrentTripId(trip.id);
         const days = trip.available_days ? trip.available_days.split(',').map(d => d.trim()) : [];
+
+        let fetchedItineraries = [];
+
+        // Fetch itineraries BEFORE setting newTrip to avoid race conditions
+        try {
+            const itinResp = await api.get(`/Itineraries/getItinerariesByTrip?trip_id=${trip.id}&type=weekend`);
+            if (itinResp.data.success && itinResp.data.data.length > 0) {
+                fetchedItineraries = itinResp.data.data.map(item => ({
+                    itinerary_id: item.itinerary_id,
+                    day_number: item.day_number,
+                    day_title: item.day_title || '',
+                    description: item.description || '',
+                    meals: item.meals || '',
+                    accommodation: item.accommodation || '',
+                    activities: item.activities || ''
+                }));
+            }
+        } catch (err) {
+            console.error("Error fetching itineraries for edit:", err);
+        }
+
         setNewTrip({
             title: trip.title,
             image: null,
@@ -292,37 +365,10 @@ const WeekendTrips = () => {
             max_group_size: trip.max_group_size || '',
             age_limit: trip.age_limit || '',
             status: trip.status,
-            itineraries: [] // Will fetch separately
+            itineraries: fetchedItineraries
         });
 
-        // Fetch itineraries
-        const fetchItineraries = async () => {
-            try {
-                const itinResp = await api.get(`/Itinerary/getItinerariesByTrip?trip_id=${trip.id}&type=weekend`);
-                if (itinResp.data.success) {
-                    const itinData = itinResp.data.data.map(item => ({
-                        day_number: item.day_number,
-                        day_title: item.day_title || '',
-                        description: item.description || '',
-                        meals: item.meals || '',
-                        accommodation: item.accommodation || '',
-                        activities: item.activities || ''
-                    }));
-                    setNewTrip(prev => ({
-                        ...prev,
-                        itineraries: itinData.length > 0 ? itinData : [{ day_number: 1, day_title: '', description: '', meals: '', accommodation: '', activities: '' }]
-                    }));
-                }
-            } catch (err) {
-                console.error("Error fetching itineraries for edit:", err);
-                setNewTrip(prev => ({
-                    ...prev,
-                    itineraries: [{ day_number: 1, day_title: '', description: '', meals: '', accommodation: '', activities: '' }]
-                }));
-            }
-        };
-        fetchItineraries();
-        setImagePreview(tripImages[trip.id]);
+        setImagePreview(tripImages[trip.id] || null);
         setShowAddForm(true);
     };
 
