@@ -4,8 +4,10 @@ import PaymentMethodSelector from './PaymentMethodSelector';
 import BookingConfirmation from './BookingConfirmation';
 import { createBooking, verifyPayment } from '../../services/BookingService';
 import { InlineSpinner, OverlayLoader } from '../common/LoadingSpinner';
+import { useAuth } from '../../context/AuthContext';
 
 const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
+    const { user } = useAuth();
     const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [bookingComplete, setBookingComplete] = useState(false);
@@ -31,6 +33,14 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
             setBookingComplete(false);
             setErrors({});
             
+            // Pre-fill user data if available
+            setFormData(prev => ({
+                ...prev,
+                full_name: user?.full_name || user?.name || prev.full_name,
+                email: user?.email || prev.email,
+                phone: user?.phone || prev.phone || ''
+            }));
+            
             // Set initial travel date if provided
             if (tripData?.selectedDate) {
                 setFormData(prev => ({
@@ -44,7 +54,7 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
                 }));
             }
         }
-    }, [isOpen, tripData]);
+    }, [isOpen, tripData, user]);
 
     useEffect(() => {
         // Update travelers array when number_of_people changes

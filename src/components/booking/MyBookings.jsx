@@ -15,8 +15,20 @@ const MyBookings = () => {
     const [statusFilter, setStatusFilter] = useState('all');
     const navigate = useNavigate();
 
-    // Check for logged in user - using email from localStorage as a simple proxy for now
-    const userEmail = localStorage.getItem('userEmail') || 'test@example.com'; // Fallback for demo if needed
+    // Correctly get user email from stored user object
+    const getUserEmail = () => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                return JSON.parse(storedUser).email;
+            } catch (e) {
+                return 'test@example.com';
+            }
+        }
+        return 'test@example.com';
+    };
+
+    const userEmail = getUserEmail();
 
     useEffect(() => {
         const fetchBookings = async () => {
@@ -243,8 +255,8 @@ const MyBookings = () => {
                                                 <span className="text-gray-900 font-black">₹{parseFloat(booking.total_amount).toLocaleString()}</span>
                                             </div>
                                             <div className="flex justify-between items-center text-sm">
-                                                <span className="text-gray-600 font-medium">Token Paid:</span>
-                                                <span className="text-green-600 font-black">₹{Math.round(parseFloat(booking.total_amount) * 0.10).toLocaleString()}</span>
+                                                <span className="text-gray-600 font-medium">Token Paid (1%):</span>
+                                                <span className="text-green-600 font-black">₹{Math.round(parseFloat(booking.total_amount) * 0.01).toLocaleString()}</span>
                                             </div>
                                             <div className="pt-2 border-t border-gray-200 flex justify-between items-center">
                                                 <span className="text-xs text-gray-500 uppercase font-black">Remaining Balance:</span>
