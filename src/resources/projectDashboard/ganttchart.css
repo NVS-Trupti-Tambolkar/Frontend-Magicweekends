@@ -1,0 +1,748 @@
+/* Gantt Chart Container */
+/* .gantt-chart-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+} */
+
+/* Prevent body scrolling when modal is open */
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+
+.color-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #000;
+  display: inline-block;
+}
+
+
+/* Gantt Chart Header */
+.gantt-chart-header {
+  display: flex;
+  flex-direction: column;
+  /* Stack actions vertically */
+  margin-bottom: 1rem;
+}
+
+/* Gantt Chart Actions */
+.gantt-chart-actions {
+  display: flex;
+  flex-direction: column;
+  /* Stack title/icons and hr */
+  width: 100%;
+}
+
+/* Title and Icons Row */
+.gantt-title-icons {
+  display: flex;
+  justify-content: space-between;
+  /* Title left, icons right */
+  align-items: center;
+  width: 100%;
+}
+
+/* Title Styling */
+.TASKcard-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #333;
+}
+
+/* Container for Icons */
+.gantt-action-icons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Gantt Chart Action Icons */
+.gantt-action-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.gantt-action-icon.edit-icon {
+  color: #2196F3;
+}
+
+.gantt-action-icon.edit-icon:hover {
+  color: #1976D2;
+  transform: scale(1.2);
+}
+
+.gantt-action-icon.delete-icon {
+  color: #F44336;
+}
+
+.gantt-action-icon.delete-icon:hover {
+  color: #D32F2F;
+  transform: scale(1.2);
+}
+
+/* Horizontal Line */
+.gantt-divider {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+  margin: 1.5rem 0 0;
+  width: 100%;
+}
+
+/* Gantt Chart */
+.gantt-chart {
+  min-width: 1400px;
+  position: relative;
+}
+
+/* Gantt Grid */
+.gantt-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1rem;
+}
+
+/* Task Names */
+.task-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-top: 4rem;
+}
+
+.task-name {
+  max-width: 80%;
+  height: 2.5rem;
+  line-height: 2rem;
+  font-size: 0.875rem;
+  padding-left: 0.5rem;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+/* Chart Area */
+.chart-area {
+  position: relative;
+}
+
+/* Time Labels */
+.time-labels {
+  display: grid;
+  grid-template-columns: repeat(70, 20px);
+  text-align: center;
+  font-size: 0.75rem;
+  color: #333;
+  margin-left: 1px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.time-label {
+  padding: 0.25rem 0;
+  border-right: 1px solid #ccc;
+  height: 1rem;
+}
+
+/* Chart Grid */
+.chart-grid {
+  position: relative;
+  margin-top: 1.5rem;
+  border-left: 1px solid #ccc;
+}
+
+.grid-lines {
+  display: grid;
+  grid-template-columns: repeat(70, 20px);
+  position: absolute;
+  inset: 0;
+}
+
+.grid-line {
+  border-right: 1px solid #eee;
+  height: 100%;
+}
+
+/* Task Bars */
+.task-bars {
+  position: relative;
+  margin-top: 4rem;
+}
+
+.task-bar {
+  position: absolute;
+  height: 1.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 75%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  /* padding: 20px; */
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #001995;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  color: #6ab7ff;
+}
+
+/* Stages Form Styles */
+.stages-form-container {
+  background: linear-gradient(to bottom right, #ffffff, #f5f8ff);
+  border-radius: 12px;
+  padding: 30px;
+  border: 1px solid rgba(106, 183, 255, 0.2);
+}
+
+.stages-form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #001995;
+  text-align: center;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(106, 183, 255, 0.3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.stages-form-title::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, #001995, #6ab7ff);
+}
+
+.stages-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.stage-group {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+}
+
+.stage-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #001995;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(106, 183, 255, 0.3);
+  padding-bottom: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #001995;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid rgba(106, 183, 255, 0.3);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #6ab7ff;
+  box-shadow: 0 0 0 3px rgba(106, 183, 255, 0.2);
+}
+
+.form-group input:hover {
+  border-color: #6ab7ff;
+}
+
+.projectform-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.submit-Stagesbtn,
+.chartcancel-btn {
+  padding: 14px 40px;
+  border: none;
+  border-radius: 7px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-Stagesbtn {
+  background: linear-gradient(135deg, #001995, #6ab7ff);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 25, 149, 0.3);
+}
+
+.chartcancel-btn {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.submit-Stagesbtn:hover,
+.chartcancel-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(0, 25, 149, 0.4);
+}
+
+.submit-Stagesbtn:active,
+.chartcancel-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0, 25, 149, 0.3);
+}
+
+.task-name.sub-stage {
+    font-size: 0.9em;
+    height: 35px;
+    line-height: 17px;
+    padding-left: 20px;
+    font-family: sans-serif;
+   
+}
+.task-bar.sub-stage {
+  height: 16px;
+  margin-top: 2px;
+}
+
+.stage-group.sub-stage {
+  margin-left: 20px;
+  border-left: 2px solid #ccc;
+  padding-left: 10px;
+}
+
+/* Task Icon */
+.task-icon {
+  font-size: 0.91rem;
+  color: #000;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+/* Responsive Design */
+/* Large tablets (1024px and below, e.g., iPad Pro) */
+@media (max-width: 1024px) {
+  .gantt-chart {
+    min-width: 100%;
+  }
+
+  .gantt-grid {
+    grid-template-columns: 150px 1fr;
+  }
+
+  .task-name {
+    font-size: 0.8rem;
+  }
+
+  .time-labels,
+  .grid-lines {
+    grid-template-columns: repeat(70, 15px);
+  }
+
+  .stages-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gantt-title-icons {
+    justify-content: space-between;
+  }
+
+  .TASKcard-title {
+    font-size: 1.1rem;
+  }
+
+  .gantt-action-icon {
+    font-size: 1.4rem;
+  }
+}
+
+/* Medium tablets (768px and below, e.g., iPad) */
+@media (max-width: 768px) {
+  .gantt-chart-container {
+    padding: 0.5rem;
+  }
+
+  .gantt-chart-header {
+    padding: 0.5rem;
+  }
+
+  .TASKcard-title {
+    font-size: 1rem;
+  }
+
+  .gantt-action-icons {
+    gap: 0.5rem;
+  }
+
+  .gantt-action-icon {
+    font-size: 1.25rem;
+  }
+
+  .gantt-divider {
+    margin: 0.3rem 0;
+  }
+
+  .task-name {
+    font-size: 0.75rem;
+    padding: 0.4rem;
+  }
+
+  .time-labels,
+  .grid-lines {
+    grid-template-columns: repeat(70, 12px);
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .stages-form-container {
+    padding: 20px;
+  }
+
+  .stages-form-title {
+    font-size: 20px;
+  }
+
+  .submit-Stagesbtn,
+  .chartcancel-btn {
+    padding: 12px 30px;
+    font-size: 14px;
+  }
+}
+
+/* Phones (480px and below, e.g., iPhone) */
+@media (max-width: 480px) {
+  .gantt-chart-container {
+    padding: 0.25rem;
+    overflow: scroll;
+  }
+
+  .gantt-chart-header {
+    padding: 0.25rem;
+    overflow: scroll;
+  }
+
+  .gantt-title-icons {
+    flex-direction: row;
+    /* Keep title and icons on one line */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .TASKcard-title {
+    font-size: 0.875rem;
+  }
+
+  .gantt-action-icons {
+    gap: 0.5rem;
+  }
+
+  .gantt-action-icon {
+    font-size: 1rem;
+  }
+
+  .gantt-divider {
+    margin: 0.25rem 0;
+  }
+
+  .gantt-grid {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .task-name {
+    font-size: 0.7rem;
+    height: auto;
+    padding: 0.3rem;
+  }
+
+  .time-labels,
+  .grid-lines {
+    grid-template-columns: repeat(70, 10px);
+  }
+
+  .time-label {
+    font-size: 0.6rem;
+  }
+
+  .task-bar {
+    height: 1.2rem;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-height: 90vh;
+    padding: 10px;
+  }
+
+  .modal-close-btn {
+    font-size: 1.2rem;
+  }
+
+  .stages-form-container {
+    padding: 15px;
+  }
+
+  .stages-form-title {
+    font-size: 18px;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .projectform-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .submit-Stagesbtn,
+  .chartcancel-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+
+/* Add to existing ganttchart.css */
+
+/* Task Bar Container */
+.task-bar-container {
+  position: relative;
+}
+
+/* Task Bar */
+.task-bar {
+  position: absolute;
+  height: 1.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+/* Tooltip */
+.task-tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 4px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  /* Position above the task bar */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Show tooltip on hover */
+.task-bar:hover .task-tooltip {
+  visibility: visible;
+}
+
+/* Tooltip arrow */
+.task-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  /* Arrow at the bottom of the tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .task-tooltip {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .task-tooltip {
+    font-size: 0.65rem;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-tooltip {
+    font-size: 0.6rem;
+    padding: 4px 6px;
+  }
+}
+
+/* Task Bar Container */
+.task-bar-container {
+  position: relative;
+}
+
+/* Task Bar */
+.task-bar {
+  position: absolute;
+  height: 1.5rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+/* Tooltip */
+.task-tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 4px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  /* Position above the task bar */
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Show tooltip on hover */
+.task-bar:hover .task-tooltip {
+  visibility: visible;
+}
+
+/* Tooltip arrow */
+.task-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  /* Arrow at the bottom of the tooltip */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .task-tooltip {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .task-tooltip {
+    font-size: 0.65rem;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-tooltip {
+    font-size: 0.6rem;
+    padding: 4px 6px;
+  }
+}

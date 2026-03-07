@@ -1,0 +1,200 @@
+/* General Layout */
+.newproject-layout {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Sidebar */
+.form-sidebar {
+  width: 20%;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.form-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.form-sidebar ul li {
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  margin: 0.5rem 0;
+  padding: 15px 10px;
+}
+
+/* Form Section */
+.form-container {
+  width: 80%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.newproject-header {
+  text-align: center;
+  background: linear-gradient(135deg, #001995, #6ab7ff);
+  color: #ffffff;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  border-radius: 8px 8px 0 0;
+}
+
+.newproject-title {
+  font-size: 1.8rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.success-message {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.submit-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.createnewform {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Project Description */
+.full-width {
+  grid-column: span 3;
+}
+
+.paragraph-box {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* Suggestions Dropdown */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.suggestions-dropdown li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.suggestions-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Buttons */
+.form-actions {
+  grid-column: span 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .newproject-layout {
+    flex-direction: column;
+  }
+
+  .form-sidebar {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .form-container {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .createnewform {
+    display: contents;
+  }
+
+  .form-actions {
+    justify-content: center;
+  }
+}

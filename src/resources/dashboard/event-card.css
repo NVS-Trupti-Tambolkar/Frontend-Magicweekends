@@ -1,0 +1,45 @@
+.event-card {
+    background-color: #fef08a;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    /* position: relative; */
+    margin-top: 1rem;
+  }
+  
+  .event-tag {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.25rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+  
+  .event-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  
+  .event-description {
+    color: #4b5563;
+    margin-bottom: 1rem;
+  }
+  
+  .event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+  
+  .event-author {
+    font-weight: 500;
+  }
+  
+  .event-time {
+    color: #6b7280;
+  }
+  
+  

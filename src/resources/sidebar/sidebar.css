@@ -1,0 +1,164 @@
+/* Base Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 0;
+  background: linear-gradient(105deg, #001995, #1b1b29);
+  color: white;
+  overflow-y: auto;
+  transition: width 0.3s ease, transform 0.3s ease;
+  z-index: 1000;
+}
+
+/* Open state for sidebar */
+.sidebar.open {
+  width: 290px;
+  transform: translateX(0);
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 60px;
+}
+
+/* Navigation Item */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: antiquewhite;
+}
+
+/* Navigation Icon */
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dropdown Container */
+.dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Dropdown Toggle Icon */
+.dropdown .dropdown-icon {
+  margin-left: auto;
+  transition: transform 0.3s;
+}
+
+.dropdown .dropdown-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  margin-top: 5px;
+}
+
+/* Dropdown Icon Styling */
+.dropdown-icon {
+  margin-right: 8px;
+  font-size: 1.2em;
+  color: #fff;
+}
+
+/* Dropdown Item */
+.dropdown-item {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #fff;
+  font-size: medium;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  display: flex;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ecbfbf;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  font-size: 26px;
+}
+
+/* Responsive Styles */
+
+/* Tablet and below */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 0;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    width: 70%;
+    transform: translateX(0);
+  }
+
+  .dropdown-item {
+    font-size: 15px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .sidebar.open {
+    width: 80%;
+  }
+
+  .dropdown-item {
+    font-size: 14px;
+  }
+
+  .nav-item {
+    font-size: 14px;
+  }
+
+  .sidebar-nav {
+    margin-top: 50px;
+  }
+
+  .close-btn {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,226 @@
+.feature-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 0px;
+}
+
+.feature-wrapper {
+  position: relative;
+  padding:  60px 0 0;
+}
+
+/* Desktop and Tablet Styles */
+.feature-list-desktop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  min-height: 300px;
+}
+
+@media (max-width: 768px) {
+  .feature-list-desktop {
+    display: none;
+  }
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 120px;
+}
+
+.feature-item.up {
+  margin-top: -250px;
+}
+
+.feature-item.down {
+  margin-top: 40px;
+}
+
+.feature-icon-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feature-icon-outer-border {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  position: relative;
+}
+
+.feature-icon-outer {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+}
+
+.feature-icon-inner {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.dot-connector {
+  width: 2px;
+  height: 50px;
+  border-left: 2px dotted;
+  position: relative;
+  margin: 10px 0;
+}
+
+.dot-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  left: -5px;
+  top: -5px;
+}
+
+.connecting-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-top: 2px dotted #ccc;
+  z-index: -1;
+}
+
+.feature-title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 5px;
+  line-height: 1.4;
+  color: #333;
+}
+
+/* Mobile Styles */
+.feature-list-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .feature-list-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+.feature-item-mobile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.feature-icon-wrapper-mobile {
+  position: relative;
+}
+
+.feature-content-mobile {
+  flex: 2;
+}
+
+.feature-title-mobile {
+  font-size: 25px;
+  font-weight: 600;
+  margin: 0px;
+  line-height: 1.4;
+  color: #333;
+}
+
+.connecting-line-mobile {
+  position: absolute;
+  left: 47px;
+  top: 95px;
+  height: 32px;
+  border-left: 2px dotted;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 480px) {
+  .feature-container {
+    padding: 32px 12px;
+  }
+
+  .feature-icon-outer-border {
+    width: 60px;
+    height: 60px;
+  }
+
+  .feature-icon-outer {
+    width: 50px;
+    height: 50px;
+  }
+
+  .feature-icon-inner {
+    width: 40px;
+    height: 40px;
+  }
+
+  .feature-title-mobile {
+    font-size: 14px;
+  }
+
+  .connecting-line-mobile {
+    left: 30px;
+    top: 65px;
+    /* display: none; */
+  }
+}
+
+/* Tablet Specific Adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .feature-item {
+    width: 100px;
+  }
+
+  .feature-icon-outer-border {
+    width: 75px;
+    height: 75px;
+  }
+
+  .feature-icon-outer {
+    width: 65px;
+    height: 65px;
+  }
+
+  .feature-icon-inner {
+    width: 45px;
+    height: 45px;
+  }
+
+  .feature-title {
+    font-size: 12px;
+  }
+}
+
+/* Hover Effects */
+.feature-icon-outer-border:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}

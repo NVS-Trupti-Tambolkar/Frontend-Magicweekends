@@ -1,0 +1,406 @@
+/* PO Copy Styles */
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.action-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  width: 2.5rem;
+  height: 2.3rem;
+}
+
+.action-icon:hover {
+  color: #007bff;
+  background-color: #f0f0f0;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #666;
+}
+
+.breadcrumb a {
+  color: #007bff;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-icon {
+  margin: 0 5px;
+  color: #666;
+  font-size: 14px;
+}
+
+.breadcrumb span {
+  margin-left: 5px;
+  color: #333;
+  font-weight: 500;
+}
+
+.table-containerr {
+  width: 80%;
+  padding: 20px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin: 0 -20px;
+  padding: 0 20px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.po-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  min-width: 500px;
+}
+
+.po-table th,
+.po-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  color: black;
+}
+
+.po-table th {
+  background-color: #808080;
+  color: black;
+  text-align: center;
+  font-size: 16px;
+}
+
+.po-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.po-table a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.po-table a:hover {
+  text-decoration: underline;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.existing-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  flex: 1;
+  min-width: 200px;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.export-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  min-width: 120px;
+  white-space: nowrap;
+}
+
+.export-btn:hover {
+  opacity: 0.9;
+}
+
+.export-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* PDF Button - Red */
+.export-btn.pdf-btn {
+  background-color: #dc3545;
+}
+
+/* Excel Button - Green */
+.export-btn.excel-btn {
+  background-color: #0f7526;
+}
+
+.export-btn svg {
+  font-size: 16px;
+}
+
+.export-btn span {
+  font-weight: 500;
+}
+
+/* Unique loading spinner for POcopy export button */
+.pocopy-export-spinner {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
+
+/* Responsive Styles */
+/* Tablets (portrait and landscape) */
+@media screen and (max-width: 768px) {
+  .table-containerr {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .table-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .export-btn {
+    flex: 1;
+    min-width: 100px;
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .action-icon {
+    padding: 6px;
+    font-size: 20px;
+  }
+
+  .po-table {
+    font-size: 14px;
+  }
+
+  .po-table th,
+  .po-table td {
+    padding: 10px;
+  }
+
+  .table-wrapper {
+    margin: 0 -15px;
+    padding: 0 15px;
+  }
+}
+
+/* Medium Phones (portrait) */
+@media screen and (max-width: 576px) {
+  .form-layout {
+    padding: 10px;
+  }
+
+  .table-containerr {
+    padding: 12px;
+  }
+
+  .existing-title {
+    font-size: 18px;
+  }
+
+  .export-btn {
+    font-size: 11px;
+    padding: 5px 7px;
+    min-width: 80px;
+  }
+
+  .export-btn svg {
+    font-size: 12px;
+  }
+
+  .action-icon {
+    font-size: 18px;
+    padding: 4px;
+  }
+
+  .table-actions {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .po-table {
+    font-size: 13px;
+  }
+
+  .po-table th,
+  .po-table td {
+    padding: 8px;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+  }
+
+  .table-wrapper {
+    margin: 0 -12px;
+    padding: 0 12px;
+  }
+}
+
+/* Small Phones */
+@media screen and (max-width: 480px) {
+  .form-layout {
+    padding: 8px;
+  }
+
+  .table-containerr {
+    padding: 10px;
+  }
+
+  .existing-title {
+    font-size: 16px;
+  }
+
+  .export-btn {
+    font-size: 10px;
+    padding: 4px 6px;
+    min-width: 70px;
+  }
+
+  .export-btn svg {
+    font-size: 11px;
+  }
+
+  .action-icon {
+    font-size: 16px;
+    padding: 3px;
+  }
+
+  .table-actions {
+    gap: 5px;
+  }
+
+  .po-table {
+    font-size: 12px;
+  }
+
+  .po-table th,
+  .po-table td {
+    padding: 6px;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+  }
+
+  .loading {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .table-wrapper {
+    margin: 0 -10px;
+    padding: 0 10px;
+  }
+}
+
+/* Extra Small Phones */
+@media screen and (max-width: 360px) {
+  .export-btn {
+    font-size: 9px;
+    padding: 3px 5px;
+    min-width: 60px;
+  }
+
+  .export-btn svg {
+    font-size: 10px;
+  }
+
+  .action-icon {
+    font-size: 14px;
+    padding: 2px;
+  }
+
+  .po-table {
+    font-size: 11px;
+  }
+
+  .po-table th,
+  .po-table td {
+    padding: 5px;
+  }
+
+  .table-wrapper {
+    margin: 0 -8px;
+    padding: 0 8px;
+  }
+}
+
+/* Loading spinner adjustments */
+@media screen and (max-width: 768px) {
+
+  .spinner,
+  .pocopy-export-spinner {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+
+  .spinner,
+  .pocopy-export-spinner {
+    width: 12px;
+    height: 12px;
+  }
+}

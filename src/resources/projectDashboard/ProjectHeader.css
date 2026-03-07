@@ -1,0 +1,132 @@
+.project-header {
+  padding: 0.75rem;
+}
+
+.project-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.project-header-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.project-dropdown {
+    padding: 0.5rem;
+    font-size: 0.90rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    /* width: 100%; */
+    font-weight: 600;
+    /* max-width: 300px; */
+}
+
+.progress-container {
+  position: relative;
+  padding-top: 1rem;
+}
+
+.progress-bar {
+  height: 0.3rem;
+  background-color: #ccc;
+  border-radius: 9999px;
+}
+
+.progress-fill {
+  height: 100%;
+  /* background-color: #ADD8E6; */
+  background-color: #08840e;
+  transition: width 0.3s ease;
+  border-radius: 9999px;
+}
+
+.phase-indicators {
+  position: absolute;
+  top: 0.5rem;
+  left: 17px;
+  width: 95%;
+  height: 100%;
+  z-index: 0;
+}
+
+.phase-indicator {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+}
+
+.phase-dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: white;
+}
+
+.phase-name {
+  font-size: 0.65rem;
+  margin-top: 0.25rem;
+  white-space: nowrap;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-name {
+    font-size: 1rem;
+  }
+
+  .project-dropdown {
+    font-size: 0.9rem;
+    max-width: 250px;
+  }
+
+  .phase-dot {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 0.8rem;
+  }
+
+  .phase-name {
+    font-size: 0.6rem;
+    max-width: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-header {
+    padding: 0.5rem;
+  }
+
+  .project-name {
+    font-size: 0.875rem;
+  }
+
+  .project-dropdown {
+    font-size: 0.8rem;
+    max-width: 200px;
+  }
+
+  .phase-dot {
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.7rem;
+  }
+
+  .phase-name {
+    font-size: 0.5rem;
+    max-width: 50px;
+  }
+}

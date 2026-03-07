@@ -1,0 +1,61 @@
+/* Updated styles for the new card */
+.employee-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .employee-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border:#ccc solid 1px;
+  }
+  
+  .employee-icon {
+    width: 60px;
+    height: 60px;
+    margin: 16px auto;
+    background: linear-gradient(135deg, #ff9800, #ff5722);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+  }
+  
+  .employee-details {
+    padding: 16px;
+    text-align: center;
+  }
+  
+  .employee-details h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+  
+  .employee-details p {
+    font-size: 14px;
+    color: #666;
+    margin: 4px 0;
+  }
+  
+  .status-approved {
+    color: #28a745; /* Green for approved */
+  }
+  
+  .status-pending {
+    color: #ffc107; /* Yellow for pending */
+  }
+  
+  .status-rejected {
+    color: #dc3545; /* Red for rejected */
+  }

@@ -1,0 +1,54 @@
+.upcoming-deadlines {
+  padding: 0.5rem;
+}
+
+.metrics-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.metrics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metrics-row {
+  display: flex;
+  font-size: 0.875rem;
+}
+
+.date-value {
+  font-weight: 500;
+  margin-left: 0.25rem;
+}
+
+.upcoming-deadlines {
+/* padding: 20px;
+background-color: #f9f9f9; */
+border-radius: 8px;
+}
+
+.metrics-title {
+font-size: 16px;
+font-weight: bold;
+margin-bottom: 10px;
+}
+
+.metrics-content {
+display: flex;
+flex-direction: column;
+gap: 15px;
+}
+
+.metrics-row {
+font-size: 16px;
+color: #333;
+}
+
+.date-value {
+font-weight: 500;
+color: #d32f2f; /* Red for emphasis */
+}

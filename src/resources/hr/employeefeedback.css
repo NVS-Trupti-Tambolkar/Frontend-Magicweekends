@@ -1,0 +1,615 @@
+/* employeefeedback.css */
+.efb-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+}
+
+.efb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  background: #ffe3bf;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.efb-view-feedback-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(135deg, #faac38, #ffaa42);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+
+.efb-view-feedback-btn:hover {
+  background: linear-gradient(135deg, #d19131, #b1752d);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(74, 144, 226, 0.3);
+}
+
+.efb-view-feedback-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.efb-btn-icon {
+  font-size: 1.1rem;
+}
+
+.efb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.efb-title {
+  font-size: 2rem;
+  color: #ff9a0d;
+  margin-bottom: 0.5rem;
+  background: #ffe3bf;
+  text-align: center;
+  font-weight: 600;
+}
+
+.efb-subtitle {
+  color: #666;
+  /* text-align: center; */
+  margin-bottom: 1rem;
+  /* font-size: 1.1rem; */
+}
+
+.efb-alert {
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  animation: fadeIn 0.3s ease;
+}
+
+.efb-alert-error {
+  background-color: #fff2f0;
+  color: #d32f2f;
+  border-left: 4px solid #ff6b6b;
+}
+
+.efb-form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.efb-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.efb-form-group-half {
+  flex: 1;
+}
+
+.efb-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+}
+
+.efb-input,
+.efb-select,
+.efb-textarea {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.efb-input:focus,
+.efb-select:focus,
+.efb-textarea:focus {
+  outline: none;
+  border-color: #ff9d45;
+  box-shadow: 0 0 0 3px rgba(255, 157, 69, 0.2);
+  background-color: #fff;
+}
+
+.efb-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.efb-char-count {
+  font-size: 0.85rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.efb-field-error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.efb-input-error {
+  border-color: #d32f2f !important;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1) !important;
+}
+
+.efb-satisfaction-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.efb-satisfaction-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #e0e0e0;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.efb-satisfaction-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ff7e29;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(255, 126, 41, 0.3);
+  transition: all 0.2s ease;
+}
+
+.efb-satisfaction-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(255, 126, 41, 0.5);
+}
+
+.efb-satisfaction-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ff7e29;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(255, 126, 41, 0.3);
+  border: none;
+}
+
+.efb-satisfaction-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.efb-satisfaction-value {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ff7e29;
+  margin-top: 0.5rem;
+}
+
+.efb-submit-button {
+  padding: 1rem;
+  background: linear-gradient(135deg, #ff9d45, #ff7e29);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.efb-submit-button:hover {
+  background: linear-gradient(135deg, #ff8c2a, #ff6b1a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 126, 41, 0.2);
+}
+
+.efb-submit-button:active {
+  transform: translateY(0);
+}
+
+.efb-submit-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.efb-submit-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.efb-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.efb-loading {
+  padding: 0.8rem;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+/* Modal Styles */
+.efb-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.efb-modal {
+  background-color: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease;
+  overflow: hidden;
+  /* Hide overflow at modal level */
+}
+
+.efb-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+  flex-shrink: 0;
+  /* Prevent header from shrinking */
+}
+
+.efb-modal-header h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.efb-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.efb-modal-close:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.efb-modal-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  flex: 1;
+  /* Allow content area to grow and fill available space */
+  min-height: 0;
+  /* Fix for flexbox overflow issue */
+}
+
+.efb-loading-feedbacks {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.efb-no-feedback {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.efb-feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.efb-feedback-card {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Make cards fill grid cell height */
+}
+
+.efb-feedback-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.efb-card-header {
+  background: #f8e5cb;
+  color: #494c50;
+  padding: 1rem;
+  flex-shrink: 0;
+  /* Prevent header from shrinking */
+}
+
+.efb-card-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.efb-card-title h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.efb-card-id {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.efb-card-department {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.efb-card-body {
+  padding: 1rem;
+  overflow-y: auto;
+  /* Enable scrolling for the entire card body */
+  flex: 1;
+  /* Allow body to grow and fill available space */
+  min-height: 0;
+  /* Fix for flexbox overflow issue */
+  max-height: 300px;
+  /* Set a max height for the card body */
+
+  /* Custom scrollbar styling for WebKit browsers (Chrome, Safari, Edge) */
+  scrollbar-width: 2px;
+  /* For Firefox */
+  scrollbar-color: #f0f0f0;
+  /* For Firefox - thumb and track color */
+}
+
+/* WebKit scrollbar styling */
+.efb-card-body::-webkit-scrollbar {
+  width: 2px;
+  /* Width of the scrollbar */
+}
+
+.efb-card-body::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  /* Color of the track */
+}
+
+.efb-card-body::-webkit-scrollbar-thumb {
+  background-color: #ff9d45;
+  /* Color of the scrollbar thumb */
+  border-radius: 1px;
+  /* Rounded corners for the thumb */
+}
+
+.efb-card-body::-webkit-scrollbar-thumb:hover {
+  background-color: #ff7e29;
+  /* Color of the scrollbar thumb on hover */
+}
+
+.efb-card-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.efb-card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.efb-card-label {
+  font-weight: 600;
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.efb-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.efb-star-filled {
+  color: #ff9d45;
+}
+
+.efb-star-empty {
+  color: #ddd;
+}
+
+.efb-card-section {
+  margin-bottom: 1rem;
+}
+
+.efb-card-section h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+.efb-card-section p {
+  margin: 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.efb-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  background-color: #f0f0f0;
+  color: #666;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  /* Prevent footer from shrinking */
+}
+
+.efb-icon {
+  font-size: 1rem;
+}
+
+/* Responsive adjustments for modal */
+@media (max-width: 1024px) {
+  .efb-feedback-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .efb-modal {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .efb-modal-header {
+    padding: 1rem;
+  }
+
+  .efb-modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .efb-modal-content {
+    padding: 1rem;
+  }
+
+  .efb-feedback-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .efb-card-body {
+    max-height: 250px;
+    /* Slightly smaller max height for tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  .efb-modal-header {
+    padding: 0.8rem;
+    display: block;
+  }
+
+  .efb-header {
+    display: block;
+  }
+
+  .efb-modal-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .efb-modal-content {
+    padding: 0.8rem;
+  }
+
+  .efb-card-title h3 {
+    font-size: 1.1rem;
+  }
+
+  .efb-form-row {
+    gap: 1.5rem;
+    display: block;
+  }
+
+  .efb-card-id {
+    font-size: 0.8rem;
+  }
+
+  .efb-card-department {
+    font-size: 0.85rem;
+  }
+
+  .efb-card-section h4 {
+    font-size: 0.95rem;
+  }
+
+  .efb-card-section p {
+    font-size: 0.9rem;
+  }
+
+  .efb-form-group {
+    display: flex;
+    flex-direction: column;
+    /* gap: 0.5rem; */
+    margin-bottom: 0.5rem;
+  }
+
+  .efb-card-body {
+    max-height: 200px;
+    /* Smaller max height for mobile */
+  }
+
+  .efb-card-footer {
+    font-size: 0.85rem;
+  }
+}

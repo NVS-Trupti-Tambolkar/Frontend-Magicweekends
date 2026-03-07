@@ -1,0 +1,140 @@
+.header {
+  background: linear-gradient(45deg, #001995, #1b1b29); /* Lighter blue to darker blue */
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.menu-button {
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  color: white;
+  font-size: 30px;            
+  border-radius: 5px;            
+  cursor: pointer;              
+  transition: all 0.3s ease;     
+}
+
+
+
+/* .menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .menu-icon {
+  width: 24px;
+  height: 2px;
+  background-color: white;
+  position: relative;
+} */
+
+/* .menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.menu-icon::before {
+  top: -6px;
+}
+
+.menu-icon::after {
+  bottom: -6px;
+} */
+
+.header-title {
+  font-size: 1.25rem;
+  font-weight:bolder;
+}
+
+.header-title-mobile {
+  display: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-select {
+  background-color: #1e3a8a;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+.settings-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.settings-icon {
+  width: 20px;
+  height: 20px;
+  fill: white;
+}
+
+.headerlogo {
+  width: 180px;       /* Set a fixed width for the logo */
+  height: auto;       /* Ensure the aspect ratio of the logo is maintained */
+  max-width: 100%;    /* Ensures the logo doesn't exceed its container's width */
+}
+
+@media (max-width: 768px) {
+  .header-title {
+    display: none; /* Hide the full title on mobile */
+  }
+
+  .header-title-mobile {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .header-select {
+    max-width: 150px;
+  }
+
+  .header-left {
+    gap: 10px;
+}
+}
+
+@media (max-width: 768px) { /* Tablets and below */
+    .headerlogo {
+        max-width: 140px;
+    }
+}
+
+@media (max-width: 480px) { /* Phones */
+    .headerlogo {
+        max-width: 120px;
+    }
+}
+
+

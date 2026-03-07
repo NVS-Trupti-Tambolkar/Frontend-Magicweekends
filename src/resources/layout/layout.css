@@ -1,0 +1,59 @@
+/* Root layout container */
+.root-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main layout for content and sidebar */
+.main-layout {
+  display: flex;
+  flex: 1;
+  /* overflow: hidden; */
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  /* padding: 16px; */
+  padding: 1rem;
+  background-color: #f5f5f5;
+  width: 0;
+  /* overflow-y: auto; */
+  /* min-height: 94vh;
+   */
+}
+
+/* Header */
+.header {
+  background-color: #003366;
+  color: white;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+/* Footer */
+/* .footer {
+  background-color: #003366;
+  color: white;
+  text-align: center;
+  padding: 10px;
+} */
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 8px;
+    width: 0;
+  }
+}

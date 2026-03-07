@@ -1,0 +1,77 @@
+/* FormSubmission.css */
+.form-submission {
+    position: fixed;
+    bottom: 20px;
+    right: -300px; /* Start off-screen */
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.5s forwards, fadeOut 0.5s 4.5s forwards;
+    z-index: 1000; /* Ensure it's above other content */
+  }
+  
+  .form-submission.success {
+    background-color: #4caf50; /* Green for success */
+  }
+  
+  .form-submission.error {
+    background-color: #f44336; /* Red for error */
+  }
+  
+  .icon {
+    margin-right: 10px;
+    font-size: 24px;
+  }
+  
+  .message {
+    font-size: 16px;
+    margin-right: 15px; /* Space between message and close button */
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    margin-right: auto; /* Push the close button to the right */
+  }
+  
+  .close-button:hover {
+    opacity: 0.8;
+  }
+  
+  @keyframes slideIn {
+    to {
+      right: 20px; /* Slide in to the right-bottom corner */
+    }
+  }
+  
+  @keyframes fadeOut {
+    to {
+      opacity: 0;
+    }
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .form-submission {
+      bottom: 10px;
+      right: -100%; /* Start off-screen */
+      width: 90%;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+      animation: slideInMobile 0.5s forwards, fadeOut 0.5s 4.5s forwards;
+    }
+  
+    @keyframes slideInMobile {
+      to {
+        right: 10px; /* Slide in to the right-bottom corner */
+      }
+    }
+  }

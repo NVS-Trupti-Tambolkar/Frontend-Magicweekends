@@ -1,0 +1,65 @@
+/* Custom styles for the stepper */
+.stepper-container {
+  width: 100%;
+  /* padding: 20px; */
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Style for the step labels */
+.MuiStepLabel-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.step-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+  display: inline-block;
+}
+
+/* Style for the active step */
+.MuiStepLabel-active {
+  color: #1976d2 !important; /* Change to your preferred active color */
+}
+
+/* Style for the completed step */
+.MuiStepLabel-completed {
+  color: #4caf50 !important; /* Change to your preferred completed color */
+}
+
+.stepper-container .MuiStepLabel-label {
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  max-width: 120px; /* Adjust based on your layout */
+  display: inline-block; /* Ensure ellipsis works */
+}
+
+.stepper-container .MuiStepLabel-label:hover {
+  white-space: normal; /* Show full text on hover */
+  overflow: visible; /* Allow overflow text to be visible */
+  background-color: white; /* Optional: Add background for better visibility */
+  z-index: 1; /* Ensure the hover text appears above other elements */
+}
+/* Responsive styles */
+@media (max-width: 768px) {
+  .stepper-container {
+    padding: 10px;
+  }
+
+  .MuiStepLabel-label {
+    font-size: 12px;
+  }
+}
+
+/* Hide stepper on phones */
+@media (max-width: 480px) {
+  .stepper-container {
+    display: none;
+  }
+}

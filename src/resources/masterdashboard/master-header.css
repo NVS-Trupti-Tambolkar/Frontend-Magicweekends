@@ -1,0 +1,164 @@
+ .master-heading {
+     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+     backdrop-filter: blur(10px);
+     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+     margin-bottom: 1rem;
+ }
+
+ .heading-container {
+     max-width: 1400px;
+     margin: 0 auto;
+     padding: 0 2rem;
+ }
+
+ .heading-main {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 0.5rem 0px;
+ }
+
+ .logo-section {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+ }
+
+ .logo-icon {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     width: 45px;
+     height: 45px;
+     background: rgba(255, 255, 255, 0.2);
+     border-radius: 12px;
+     color: white;
+     font-size: 20px;
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.3);
+ }
+
+ .logo-text h1 {
+     color: white;
+     font-size: 28px;
+     font-weight: 700;
+     margin: 0;
+     line-height: 1.2;
+ }
+
+ .header-stats {
+     display: flex;
+     gap: 24px;
+ }
+
+ .stat-item {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 4px;
+     padding: 12px 20px;
+     background: rgba(255, 255, 255, 0.1);
+     border-radius: 12px;
+     backdrop-filter: blur(10px);
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     min-width: 120px;
+ }
+
+ .stat-label {
+     color: rgba(255, 255, 255, 0.7);
+     font-size: 12px;
+     font-weight: 500;
+     text-align: center;
+ }
+
+ .stat-value {
+     color: white;
+     font-size: 16px;
+     font-weight: 700;
+ }
+
+ /* Responsive Design */
+ @media (max-width: 1024px) {
+     .heading-container {
+         padding: 0 1.5rem;
+     }
+
+     .logo-text h1 {
+         font-size: 24px;
+     }
+
+     .header-stats {
+         gap: 16px;
+     }
+
+     .stat-item {
+         padding: 10px 16px;
+         min-width: 100px;
+     }
+ }
+
+ @media (max-width: 768px) {
+     .heading-main {
+         flex-direction: column;
+         gap: 20px;
+         padding: 1.25rem 0;
+     }
+
+     .header-stats {
+         gap: 12px;
+         width: 100%;
+         justify-content: center;
+     }
+
+     .stat-item {
+         flex: 1;
+         min-width: auto;
+         padding: 8px 12px;
+     }
+
+     .stat-label {
+         font-size: 11px;
+     }
+
+     .stat-value {
+         font-size: 14px;
+     }
+ }
+
+ @media (max-width: 480px) {
+     .heading-container {
+         padding: 0 1rem;
+     }
+
+     .logo-text h1 {
+         font-size: 20px;
+     }
+
+     .logo-icon {
+         width: 35px;
+         height: 35px;
+         font-size: 16px;
+     }
+
+     .header-stats {
+         flex-direction: column;
+         gap: 8px;
+         width: 100%;
+     }
+
+     .stat-item {
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         padding: 8px 16px;
+     }
+
+     .stat-label {
+         font-size: 12px;
+     }
+
+     .stat-value {
+         font-size: 14px;
+     }
+ }

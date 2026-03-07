@@ -1,0 +1,58 @@
+/* Main Dashboard Layout */
+/* .dashboard-container {
+    padding: 1rem;
+  } */
+  
+  .dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .dashboard-left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .dashboard-right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .sub-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  /* Card Styles */
+  .card {
+    background: white;
+    border: 1px solid #f1ecec;
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card-blue {
+    background: #f0f7ff;
+  }
+  
+  /* Media Queries */
+  @media (min-width: 768px) {
+    /* .dashboard-container {
+      padding: 1.5rem;
+    } */
+  
+    .sub-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .dashboard-grid {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+  
+  
