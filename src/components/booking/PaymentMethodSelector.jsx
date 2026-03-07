@@ -43,41 +43,41 @@ const PaymentMethodSelector = ({ selectedMethod, onSelect }) => {
     ];
 
     return (
-        <div className="space-y-6">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {paymentMethods.map((method) => (
                     <button
                         key={method.id}
                         onClick={() => onSelect(method.id)}
-                        className={`group relative flex flex-col items-center justify-center p-6 rounded-3xl border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 ${
+                        className={`group relative flex flex-col items-center justify-center p-4 sm:p-6 rounded-2xl sm:rounded-3xl border-2 transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 ${
                             selectedMethod === method.id
                                 ? `${method.borderColor} bg-white shadow-xl ring-4 ring-yellow-500/10 scale-[1.02]`
                                 : 'border-gray-100 bg-gray-50/50 hover:bg-white hover:border-yellow-200'
                         }`}
                     >
                         {/* Selected Tick */}
-                        <div className={`absolute top-4 right-4 transition-all duration-500 transform ${
+                        <div className={`absolute top-2 right-2 sm:top-4 sm:right-4 transition-all duration-500 transform ${
                             selectedMethod === method.id ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
                         }`}>
-                            <FaCheckCircle className="text-yellow-500 w-5 h-5 drop-shadow-sm" />
+                            <FaCheckCircle className="text-yellow-500 w-4 h-4 sm:w-5 sm:h-5 drop-shadow-sm" />
                         </div>
 
                         {/* Icon Container */}
-                        <div className={`p-4 rounded-2xl mb-4 transition-all duration-500 group-hover:scale-110 shadow-inner ${
+                        <div className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl mb-2 sm:mb-4 transition-all duration-500 group-hover:scale-110 shadow-inner ${
                             selectedMethod === method.id ? method.color : 'bg-white shadow-sm grayscale group-hover:grayscale-0'
                         }`}>
-                            <div className={`${selectedMethod === method.id ? 'text-white' : 'text-gray-400'}`}>
+                            <div className={`${selectedMethod === method.id ? 'text-white' : 'text-gray-400'} scale-75 sm:scale-100`}>
                                 {method.icon}
                             </div>
                         </div>
 
                         {/* Text */}
-                        <h4 className={`text-sm font-black uppercase tracking-widest transition-colors ${
+                        <h4 className={`text-[10px] sm:text-xs md:text-sm font-black uppercase tracking-widest transition-colors ${
                             selectedMethod === method.id ? 'text-gray-900' : 'text-gray-500'
                         }`}>
                             {method.name}
                         </h4>
-                        <p className={`text-[10px] font-bold uppercase tracking-tighter mt-1 ${
+                        <p className={`hidden sm:block text-[10px] font-bold uppercase tracking-tighter mt-1 ${
                             selectedMethod === method.id ? 'text-gray-500' : 'text-gray-400'
                         }`}>
                             {method.description}

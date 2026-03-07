@@ -156,33 +156,25 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
                 pricePerPerson = tripData.price;
             }
 
-            const bookingData = new FormData();
-
-            bookingData.append('trip_id', tripData.id);
-            bookingData.append('trip_type', tripType);
-            bookingData.append('full_name', formData.full_name);
-            bookingData.append('email', formData.email);
-            bookingData.append('phone', formData.phone);
-            bookingData.append('travel_date', formData.travel_date);
-            bookingData.append('number_of_people', parseInt(formData.number_of_people));
-            bookingData.append('price_per_person', pricePerPerson);
-            bookingData.append('total_amount', calculateTotal());
-            bookingData.append('payment_method', formData.payment_method);
-            bookingData.append('special_request', formData.special_request || '');
-
-            // travelers data
-            const travelersDataForJson = formData.travelers.map(t => ({
-                name: t.name,
-                age: t.age,
-                gender: t.gender
-            }));
-            bookingData.append('travelers_data', JSON.stringify(travelersDataForJson));
-
+            const bookingData = {
+                trip_id: tripData.id,
+                trip_type: tripType,
+                full_name: formData.full_name,
+                email: formData.email,
+                phone: formData.phone,
+                travel_date: formData.travel_date,
+                number_of_people: parseInt(formData.number_of_people),
+                price_per_person: pricePerPerson,
+                total_amount: calculateTotal(),
+                payment_method: formData.payment_method,
+                special_request: formData.special_request || '',
+                travelers_data: formData.travelers
+            };
 
             const response = await createBooking(bookingData);
 
             if (response.success) {
-                const { razorpay_order_id, razorpay_key_id, id: bookingId } = response.data;
+                const { razorpay_order_id, razorpay_key_id, booking_id: bookingId } = response.data;
                 setBookingId(bookingId);
 
                 // Initialize Razorpay
@@ -234,7 +226,8 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
             }
         } catch (error) {
             console.error('Booking error:', error);
-            alert(error.message || 'Failed to create booking. Please try again.');
+            const errorMsg = typeof error === 'object' ? (error.message || error.error || 'Failed to create booking') : error;
+            alert(errorMsg + '. Please try again or contact support.');
         } finally {
             setLoading(false);
         }
@@ -254,45 +247,45 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 sm:p-6 md:p-8">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full h-full sm:h-auto max-h-[95vh] flex flex-col relative overflow-hidden">
                 {loading && <OverlayLoader message="Processing your booking..." />}
                 
                 {/* Sticky Header Section */}
-                <div className="sticky top-0 z-[100] bg-white rounded-t-2xl shadow-md">
+                <div className="flex-shrink-0 sticky top-0 z-[100] bg-white rounded-t-2xl shadow-md">
                     {/* Header */}
-                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-6 rounded-t-2xl flex justify-between items-center">
-                        <div>
-                            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Book Your Adventure</h2>
-                            <p className="text-sm font-medium text-gray-800/80 mt-1 uppercase tracking-widest">{tripData?.title}</p>
+                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-4 sm:p-6 flex justify-between items-center">
+                        <div className="pr-8">
+                            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight">Book Your Adventure</h2>
+                            <p className="text-[10px] sm:text-xs md:text-sm font-bold text-gray-800/80 mt-0.5 uppercase tracking-widest truncate max-w-[200px] sm:max-w-md">{tripData?.title}</p>
                         </div>
                         <button
                             onClick={onClose}
-                            className="text-gray-900 hover:text-gray-700 transition-colors p-2 hover:bg-white/20 rounded-full"
+                            className="absolute top-4 right-4 text-gray-900 hover:text-gray-700 transition-colors p-2 hover:bg-white/20 rounded-full"
                         >
-                            <FaTimes className="w-6 h-6" />
+                            <FaTimes className="w-5 h-5 sm:w-6 sm:h-6" />
                         </button>
                     </div>
 
                     {/* Progress Steps */}
-                    <div className="px-6 py-4 bg-gray-50 border-b">
+                    <div className="px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-b">
                         <div className="flex items-center justify-between max-w-2xl mx-auto">
                             {[1, 2, 3, 4].map((step) => (
                                 <div key={step} className="flex items-center">
-                                    <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold transition-all ${currentStep >= step
+                                    <div className={`flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full font-bold text-xs sm:text-sm transition-all ${currentStep >= step
                                         ? 'bg-yellow-500 text-white shadow-lg'
                                         : 'bg-gray-300 text-gray-600'
                                         }`}>
                                         {currentStep > step ? <FaCheckCircle /> : step}
                                     </div>
                                     {step < 4 && (
-                                        <div className={`w-16 h-1 mx-2 ${currentStep > step ? 'bg-yellow-500' : 'bg-gray-300'
+                                        <div className={`w-8 sm:w-16 h-0.5 sm:h-1 mx-1 sm:mx-2 ${currentStep > step ? 'bg-yellow-500' : 'bg-gray-300'
                                             }`} />
                                     )}
                                 </div>
                             ))}
                         </div>
-                        <div className="flex justify-between max-w-2xl mx-auto mt-2 text-[10px] font-black uppercase tracking-widest text-gray-500">
+                        <div className="flex justify-between max-w-2xl mx-auto mt-2 text-[8px] sm:text-[10px] font-black uppercase tracking-widest text-gray-500">
                             <span className={currentStep >= 1 ? 'text-yellow-600' : ''}>Details</span>
                             <span className={currentStep >= 2 ? 'text-yellow-600' : ''}>Travelers</span>
                             <span className={currentStep >= 3 ? 'text-yellow-600' : ''}>Payment</span>
@@ -302,7 +295,7 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
                 </div>
 
                 {/* Form Content */}
-                <div className="p-6 relative z-0">
+                <div className="flex-grow overflow-y-auto p-4 sm:p-6 relative z-0">
                     {/* Step 1: Basic Details */}
                     {currentStep === 1 && (
                         <div className="space-y-4">
