@@ -10,6 +10,16 @@ export const createBooking = async (bookingData) => {
     }
 };
 
+// Get all bookings (admin)
+export const getAllBookings = async (limit = 50, offset = 0) => {
+    try {
+        const response = await api.get(`/Booking/bookings?limit=${limit}&offset=${offset}`);
+        return response.data;
+    } catch (error) {
+        throw error.response?.data || error.message;
+    }
+};
+
 // Get booking by ID
 export const getBookingById = async (id) => {
     try {

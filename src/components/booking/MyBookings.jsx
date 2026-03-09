@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCalendarAlt, FaUser, FaChevronRight } from 'react-icons/fa';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
-import { getUserBookings } from '../../services/BookingService';
+import { getUserBookings, getAllBookings } from '../../services/BookingService';
 import { PageLoader } from '../common/LoadingSpinner';
 import bookingsBg from '../../assets/backgrounds/my-bookings-bg.png';
 
@@ -34,13 +34,25 @@ const MyBookings = () => {
         const fetchBookings = async () => {
             setLoading(true);
             try {
-                const response = await getUserBookings(userEmail);
+                const storedUser = localStorage.getItem('user');
+                const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+                const isAdmin = parsedUser?.role === 'admin';
+
+                let response;
+                if (isAdmin) {
+                    console.log('Fetching ALL bookings for admin');
+                    response = await getAllBookings();
+                } else {
+                    console.log(`Fetching bookings for user: ${userEmail}`);
+                    response = await getUserBookings(userEmail);
+                }
+
                 if (response.success) {
                     setBookings(response.data);
                 }
             } catch (err) {
                 console.error('Error fetching bookings:', err);
-                setError('Failed to load your bookings. Please try again later.');
+                setError('Failed to load bookings. Please try again later.');
             } finally {
                 setLoading(false);
             }
@@ -122,10 +134,12 @@ const MyBookings = () => {
                                 Travel Management
                             </span>
                             <h1 className="text-5xl md:text-7xl font-black text-white mb-6 italic tracking-tighter uppercase leading-[0.9]">
-                                Your <span className="text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.4)]">Journeys</span>
+                                {localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).role === 'admin' ? 'Master' : 'Your'} <span className="text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.4)]">Bookings</span>
                             </h1>
                             <p className="text-gray-200 text-lg md:text-xl font-medium max-w-lg leading-relaxed opacity-90">
-                                Explore, manage, and revisit your amazing adventures across the globe.
+                                {localStorage.getItem('user') && JSON.parse(localStorage.getItem('user')).role === 'admin' 
+                                    ? 'Administrative overview of all travel reservations in the system.' 
+                                    : 'Explore, manage, and revisit your amazing adventures across the globe.'}
                             </p>
                         </div>
 

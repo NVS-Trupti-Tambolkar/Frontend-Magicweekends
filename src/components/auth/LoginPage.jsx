@@ -5,6 +5,7 @@ import api from '../../services/Axios';
 import NotificationSnackbar from '../common/NotificationSnackbar';
 import { useAuth } from '../../context/AuthContext';
 import { InlineSpinner } from '../common/LoadingSpinner';
+import { GoogleLogin } from '@react-oauth/google';
 
 const LoginPage = () => {
     const { login } = useAuth();
@@ -39,6 +40,27 @@ const LoginPage = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleGoogleSuccess = async (googleResponse) => {
+        try {
+            setLoading(true);
+            const response = await api.post('/auth/google', {
+                credential: googleResponse.credential
+            });
+            
+            if (response.data.success) {
+                const { token, username, role, email } = response.data.data;
+                login({ username, role, email }, token);
+                showMessage("Login successful! Redirecting...", "success");
+                setTimeout(() => navigate('/'), 1500);
+            }
+        } catch (error) {
+            console.error("Google Login error:", error);
+            showMessage("Google Login failed. Please try again.", "error");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -52,10 +74,10 @@ const LoginPage = () => {
             const response = await api.post('/auth/login', formData);
             
             if (response.data.success) {
-                const { token, username, role } = response.data.data;
+                const { token, username, role, email } = response.data.data;
                 
                 // Use AuthContext to login
-                login({ username, role }, token);
+                login({ username, role, email }, token);
                 
                 showMessage("Login successful! Redirecting...", "success");
                 
@@ -164,6 +186,28 @@ const LoginPage = () => {
                                 <div className="absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-300"></div>
                             </button>
                         </form>
+
+                        <div className="mt-8">
+                            <div className="relative mb-6">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-white/10"></div>
+                                </div>
+                                <div className="relative flex justify-center text-sm">
+                                    <span className="px-4 bg-[#0f172a] text-gray-500 font-medium">Or continue with</span>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-center">
+                                <GoogleLogin
+                                    onSuccess={handleGoogleSuccess}
+                                    onError={() => showMessage("Google Login failed", "error")}
+                                    useOneTap
+                                    theme="filled_black"
+                                    shape="pill"
+                                    width="100%"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
 

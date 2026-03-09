@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FaTimes, FaCheckCircle, FaLock, FaShieldAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { FaTimes, FaCheckCircle, FaLock, FaShieldAlt, FaWhatsapp } from 'react-icons/fa';
 import PaymentMethodSelector from './PaymentMethodSelector';
 import BookingConfirmation from './BookingConfirmation';
 import { createBooking, verifyPayment } from '../../services/BookingService';
@@ -8,6 +9,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
     const { user } = useAuth();
+    const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const [bookingComplete, setBookingComplete] = useState(false);
@@ -131,6 +133,15 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
 
     const handleBack = () => {
         setCurrentStep(prev => prev - 1);
+    };
+
+    const handleWhatsappBooking = () => {
+        const tripName = tripData?.title || 'trip';
+        const message = `Hello Magic Weekends team! 🌟\n\nI'm extremely excited and would like to book the *"${tripName}"* trip. Could you please help me with the booking details and payment process? ✨`;
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/917620430527?text=${encodedMessage}`;
+        window.open(whatsappUrl, '_blank');
+        onClose();
     };
 
     const calculateTotal = () => {
@@ -490,20 +501,39 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
 
                     {/* Step 3: Payment Method */}
                     {currentStep === 3 && (
-                        <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-gray-900 mb-4">Select Payment Method</h3>
-                            <PaymentMethodSelector
-                                selectedMethod={formData.payment_method}
-                                onSelect={(method) => {
-                                    setFormData(prev => ({ ...prev, payment_method: method }));
-                                    if (errors.payment_method) {
-                                        setErrors(prev => ({ ...prev, payment_method: '' }));
-                                    }
-                                }}
-                            />
-                            {errors.payment_method && (
-                                <p className="text-red-500 text-sm mt-2">{errors.payment_method}</p>
-                            )}
+                        <div className="space-y-6">
+                            <h3 className="text-xl font-bold text-gray-900 mb-4">Select Booking Option</h3>
+                            
+                            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-sm text-yellow-800">
+                                <p><strong>Note:</strong> If you done payment online your have to pay extra for RAZORPAY. Choose the Whatsapp option to save your money!</p>
+                            </div>
+
+                            <div className="space-y-4">
+                                <button
+                                    onClick={handleWhatsappBooking}
+                                    className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-500 hover:bg-green-600 text-white rounded-xl shadow-md transition-all font-bold text-lg"
+                                >
+                                    <FaWhatsapp className="w-6 h-6" />
+                                    Message me on Whatsapp <span className="text-green-100 text-sm font-normal tracking-wide">(save your money)</span>
+                                </button>
+
+                                <div className="text-center text-gray-400 font-bold uppercase text-xs py-1">OR</div>
+
+                                <button
+                                    onClick={() => {
+                                        if (!user) {
+                                            navigate('/register');
+                                            onClose();
+                                            return;
+                                        }
+                                        setFormData(prev => ({ ...prev, payment_method: 'paytm' }));
+                                        handleNext();
+                                    }}
+                                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl transition-all font-bold border border-gray-200"
+                                >
+                                    Register and book online
+                                </button>
+                            </div>
                         </div>
                     )}
 
@@ -611,14 +641,16 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
                         </button>
                     )}
 
-                    {currentStep < 4 ? (
+                    {currentStep < 4 && currentStep !== 3 && (
                         <button
                             onClick={handleNext}
                             className="ml-auto px-8 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors font-bold shadow-lg"
                         >
                             Next
                         </button>
-                    ) : (
+                    )}
+                    
+                    {currentStep === 4 && (
                         <button
                             onClick={handleSubmit}
                             disabled={loading}

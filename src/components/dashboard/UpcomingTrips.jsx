@@ -54,6 +54,9 @@ const UpcomingTrips = ({ onLoad }) => {
         }
 
         const upcomingWeekend = weekendTrips.filter(trip => {
+            // Show if trip is active
+            if (trip.status === false || trip.status === 'false') return false;
+
             // Priority A: Check specific departure_dates first
             const hasFutureDate = (trip.departure_dates || []).some(dateStr => {
                 const d = new Date(dateStr);
@@ -62,10 +65,8 @@ const UpcomingTrips = ({ onLoad }) => {
 
             if (hasFutureDate) return true;
 
-            // Priority B: Check Available Days logic (e.g. Sat show from Wed)
-            if (!trip.available_days) return false;
-            const availableArray = trip.available_days.split(',').map(d => d.trim());
-            return availableArray.some(day => windowDays.includes(day));
+            // Priority B: If no specific dates, show if any available_days are set 
+            return !!trip.available_days;
         }).map(trip => ({
             ...trip,
             type: 'weekend',

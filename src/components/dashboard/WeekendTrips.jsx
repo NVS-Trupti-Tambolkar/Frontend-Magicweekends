@@ -110,6 +110,7 @@ const WeekendTrips = ({ onLoad }) => {
                 }, {});
 
                 setTripImages(imageMap);
+                console.log("DEBUG: Weekend tripData received:", tripData);
                 
                 // Visibility logic for Weekend Trips on Dashboard:
                 // Show from 3 days before any available day.
@@ -127,6 +128,9 @@ const WeekendTrips = ({ onLoad }) => {
                 }
 
                 const filteredTrips = tripData.filter(trip => {
+                    // Show if trip is active
+                    if (trip.status === false || trip.status === 'false') return false;
+
                     // Priority A: Check specific departure_dates first
                     const hasFutureDate = (trip.departure_dates || []).some(dateStr => {
                         const d = new Date(dateStr);
@@ -135,12 +139,12 @@ const WeekendTrips = ({ onLoad }) => {
 
                     if (hasFutureDate) return true;
 
-                    // Priority B: Check Available Days logic (show 3 days before)
-                    if (!trip.available_days) return false;
-                    const availableArray = trip.available_days.split(',').map(d => d.trim());
-                    return availableArray.some(day => windowDays.includes(day));
+                    // Priority B: If no specific dates, show if any available_days are set 
+                    // (Relaxed from 3-day window to just "has available days")
+                    return !!trip.available_days;
                 });
 
+                console.log("DEBUG: Weekend filteredTrips:", filteredTrips);
                 setTrips(filteredTrips);
             }
         } catch (error) {
