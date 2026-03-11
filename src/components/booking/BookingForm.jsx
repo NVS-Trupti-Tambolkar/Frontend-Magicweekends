@@ -248,7 +248,8 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
         } catch (error) {
             console.error('Booking error:', error);
             const errorMsg = typeof error === 'object' ? (error.message || error.error || 'Failed to create booking') : error;
-            alert(errorMsg + '. Please try again or contact support.');
+            const detailMsg = error.error ? `\n\nDetails: ${error.error}` : '';
+            alert(`${errorMsg}${detailMsg}\n\nPlease try again or contact support.`);
         } finally {
             setLoading(false);
         }
