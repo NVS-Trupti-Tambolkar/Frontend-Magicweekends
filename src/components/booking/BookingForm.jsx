@@ -249,7 +249,8 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
             console.error('Booking error:', error);
             const errorMsg = typeof error === 'object' ? (error.message || error.error || 'Failed to create booking') : error;
             const detailMsg = error.error ? `\n\nDetails: ${error.error}` : '';
-            alert(`${errorMsg}${detailMsg}\n\nPlease try again or contact support.`);
+            const sentData = `\n\nSent: ${tripType} trip (ID: ${tripData.id}) via ${formData.payment_method}`;
+            alert(`${errorMsg}${detailMsg}${sentData}\n\nPlease try again or contact support.`);
         } finally {
             setLoading(false);
         }
