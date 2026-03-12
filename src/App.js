@@ -5,6 +5,7 @@ import TravelDetailPage from './components/dashboard/TravelDetailPage';
 import MyBookings from './components/booking/MyBookings';
 import LoginPage from './components/auth/LoginPage';
 import RegisterPage from './components/auth/RegisterPage';
+import ForgotPasswordPage from './components/auth/ForgotPasswordPage';
 import { AuthProvider } from './context/AuthContext';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             <Route path="/my-bookings" element={<MyBookings />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           </Routes>
         </Router>
       </div>

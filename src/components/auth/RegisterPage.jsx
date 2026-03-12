@@ -140,27 +140,27 @@ const RegisterPage = () => {
                     Back to Hub
                 </Link>
 
-                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-                    <div className="text-center mb-10">
-                        <div className="inline-flex items-center justify-center w-20 h-20 bg-yellow-500 rounded-2xl mb-6 shadow-lg shadow-yellow-500/20 rotate-3 transform transition-transform hover:rotate-0">
-                            <FaUserPlus className="text-black text-3xl" />
+                <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl">
+                    <div className="text-center mb-6">
+                        <div className="inline-flex items-center justify-center w-14 h-14 bg-yellow-500 rounded-xl mb-4 shadow-lg shadow-yellow-500/20 rotate-3 transform transition-transform hover:rotate-0">
+                            <FaUserPlus className="text-black text-2xl" />
                         </div>
-                        <h2 className="text-3xl font-bold text-white mb-2">{user?.role === 'admin' ? 'Create New Admin' : 'Join Our Adventure'}</h2>
-                        <p className="text-gray-400">{user?.role === 'admin' ? 'Admin Panel • User Registration' : 'Register to start your journey'}</p>
+                        <h2 className="text-2xl font-bold text-white mb-1">{user?.role === 'admin' ? 'Create New Admin' : 'Join Our Adventure'}</h2>
+                        <p className="text-gray-400 text-xs">{user?.role === 'admin' ? 'Admin Panel • User Registration' : 'Register to start your journey'}</p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-3">
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2 ml-1">Username</label>
+                            <label className="block text-xs font-medium text-gray-400 mb-1 ml-1">Username</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                    <FaUser className="h-5 w-5" />
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                    <FaUser className="h-4 w-4" />
                                 </div>
                                 <input
                                     type="text"
                                     name="username"
                                     required
-                                    className="block w-full pl-11 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all"
+                                    className="block w-full pl-9 pr-3 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all"
                                     placeholder="Enter username"
                                     value={formData.username}
                                     onChange={handleChange}
@@ -169,17 +169,17 @@ const RegisterPage = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2 ml-1">Email Address</label>
+                            <label className="block text-xs font-medium text-gray-400 mb-1 ml-1">Email Address</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                    <FaEnvelope className="h-5 w-5" />
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                    <FaEnvelope className="h-4 w-4" />
                                 </div>
                                 <input
                                     type="email"
                                     name="email"
                                     required
                                     disabled={otpSent}
-                                    className={`block w-full pl-11 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all ${otpSent ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    className={`block w-full pl-9 pr-3 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all ${otpSent ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     placeholder="Enter email address"
                                     value={formData.email}
                                     onChange={handleChange}
@@ -189,17 +189,17 @@ const RegisterPage = () => {
 
                         {otpSent && (
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-2 ml-1">Enter OTP</label>
+                                <label className="block text-xs font-medium text-gray-400 mb-1 ml-1">Enter OTP</label>
                                 <div className="relative group">
-                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                        <FaShieldAlt className="h-5 w-5" />
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                        <FaShieldAlt className="h-4 w-4" />
                                     </div>
                                     <input
                                         type="text"
                                         name="otp"
                                         required
                                         maxLength="6"
-                                        className="block w-full pl-11 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all tracking-widest text-center text-xl font-mono"
+                                        className="block w-full pl-9 pr-3 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all tracking-widest text-center font-mono"
                                         placeholder="------"
                                         value={formData.otp}
                                         onChange={handleChange}
@@ -209,16 +209,16 @@ const RegisterPage = () => {
                         )}
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2 ml-1">Password</label>
+                            <label className="block text-xs font-medium text-gray-400 mb-1 ml-1">Password</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                    <FaLock className="h-5 w-5" />
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                    <FaLock className="h-4 w-4" />
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     name="password"
                                     required
-                                    className="block w-full pl-11 pr-12 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all"
+                                    className="block w-full pl-9 pr-10 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all"
                                     placeholder="Enter password"
                                     value={formData.password}
                                     onChange={handleChange}
@@ -226,24 +226,24 @@ const RegisterPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-yellow-500 transition-colors"
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-yellow-500 transition-colors"
                                 >
-                                    {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                                    {showPassword ? <FaEyeSlash className="h-4 w-4" /> : <FaEye className="h-4 w-4" />}
                                 </button>
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-400 mb-2 ml-1">Confirm Password</label>
+                            <label className="block text-xs font-medium text-gray-400 mb-1 ml-1">Confirm Password</label>
                             <div className="relative group">
-                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                    <FaLock className="h-5 w-5" />
+                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                    <FaLock className="h-4 w-4" />
                                 </div>
                                 <input
                                     type={showConfirmPassword ? "text" : "password"}
                                     name="confirmPassword"
                                     required
-                                    className="block w-full pl-11 pr-12 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all"
+                                    className="block w-full pl-9 pr-10 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all"
                                     placeholder="Confirm password"
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
@@ -251,19 +251,19 @@ const RegisterPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-yellow-500 transition-colors"
+                                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-yellow-500 transition-colors"
                                 >
-                                    {showConfirmPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                                    {showConfirmPassword ? <FaEyeSlash className="h-4 w-4" /> : <FaEye className="h-4 w-4" />}
                                 </button>
                             </div>
                         </div>
 
                         {user?.role === 'admin' && (
                             <div>
-                                <label className="block text-sm font-medium text-gray-400 mb-2 ml-1">User Role</label>
+                                <label className="block text-xs font-medium text-gray-400 mb-1 ml-1">User Role</label>
                                 <select
                                     name="role"
-                                    className="block w-full px-4 py-3.5 bg-[#1e293b] border border-white/10 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all cursor-pointer"
+                                    className="block w-full px-3 py-2 bg-[#1e293b] border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:ring-2 focus:ring-yellow-500/50 focus:border-yellow-500 transition-all cursor-pointer"
                                     value={formData.role}
                                     onChange={handleChange}
                                 >
@@ -279,14 +279,14 @@ const RegisterPage = () => {
                                 type="button"
                                 onClick={handleSendOtp}
                                 disabled={sendingOtp || !formData.email}
-                                className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-gray-600 disabled:text-gray-400 text-black font-bold py-4 px-6 rounded-2xl shadow-lg shadow-yellow-500/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-8"
+                                className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:bg-gray-600 disabled:text-gray-400 text-black text-sm font-bold py-2.5 px-4 rounded-xl shadow-lg shadow-yellow-500/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-5"
                             >
                                 {sendingOtp ? 'Sending OTP...' : 'Send Verification OTP'}
                             </button>
                         ) : (
                             <button
                                 type="submit"
-                                className="w-full bg-green-500 hover:bg-green-400 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-green-500/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-8 relative overflow-hidden group"
+                                className="w-full bg-green-500 hover:bg-green-400 text-white text-sm font-bold py-2.5 px-4 rounded-xl shadow-lg shadow-green-500/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-5 relative overflow-hidden group"
                             >
                                 <span className="relative z-10">{user?.role === 'admin' ? 'Register User' : 'Verify & Create Account'}</span>
                                 <div className="absolute inset-0 bg-white/20 translate-y-full hover:translate-y-0 transition-transform duration-300"></div>
@@ -294,38 +294,37 @@ const RegisterPage = () => {
                         )}
                     </form>
 
-                    <div className="mt-8">
-                        <div className="relative mb-6">
+                    <div className="mt-5">
+                        <div className="relative mb-4">
                             <div className="absolute inset-0 flex items-center">
                                 <div className="w-full border-t border-white/10"></div>
                             </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-4 bg-[#1e293b] text-gray-500 font-medium whitespace-nowrap">Or register with</span>
+                            <div className="relative flex justify-center text-xs">
+                                <span className="px-3 bg-[#1e293b] text-gray-500 font-medium whitespace-nowrap">Or register with</span>
                             </div>
                         </div>
 
-                        <div className="flex justify-center">
+                        <div className="flex justify-center transform scale-90">
                             <GoogleLogin
                                 onSuccess={handleGoogleSuccess}
                                 onError={() => showMessage("Google Login failed", "error")}
                                 useOneTap
                                 theme="filled_black"
                                 shape="pill"
-                                width="100%"
                             />
                         </div>
                     </div>
                 </div>
                 
-                <p className="text-center mt-6 text-gray-400 text-sm">
+                <p className="text-center mt-4 text-gray-400 text-xs">
                     Already have an account?{' '}
                     <Link to="/login" className="text-yellow-500 hover:text-yellow-400 font-bold transition-colors">
                         Login here
                     </Link>
                 </p>
 
-                <p className="text-center text-gray-500 text-sm mt-6">
-                    &copy; 2024 Magic Weekends Admin Panel.
+                <p className="text-center text-gray-500 text-[10px] mt-4">
+                    &copy; {new Date().getFullYear()} Magic Weekends Admin Panel.
                 </p>
             </div>
 

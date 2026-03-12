@@ -115,22 +115,22 @@ const LoginPage = () => {
                 </Link>
 
                 <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl overflow-hidden">
-                    <div className="p-8 sm:p-10">
+                    <div className="p-6 sm:p-8">
                         {/* Header */}
-                        <div className="text-center mb-10">
-                            <h2 className="text-3xl font-black text-white tracking-widest uppercase mb-2">
+                        <div className="text-center mb-6">
+                            <h2 className="text-2xl font-black text-white tracking-widest uppercase mb-1">
                                 MAGIC <span className="text-yellow-500">WEEKENDS</span>
                             </h2>
-                            <p className="text-gray-400 text-sm">Admin Access Portal</p>
+                            <p className="text-gray-400 text-xs">Admin Access Portal</p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-4">
                             {/* Username Field */}
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Username</label>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Username</label>
                                 <div className="relative group">
-                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                        <FaUser />
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                        <FaUser className="text-sm" />
                                     </div>
                                     <input
                                         type="text"
@@ -138,17 +138,17 @@ const LoginPage = () => {
                                         value={formData.username}
                                         onChange={handleChange}
                                         placeholder="admin"
-                                        className="w-full pl-11 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-4 focus:ring-yellow-500/10 transition-all"
+                                        className="w-full pl-9 pr-3 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/10 transition-all"
                                     />
                                 </div>
                             </div>
 
                             {/* Password Field */}
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Password</label>
+                            <div className="space-y-1">
+                                <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Password</label>
                                 <div className="relative group">
-                                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
-                                        <FaLock />
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 group-focus-within:text-yellow-500 transition-colors">
+                                        <FaLock className="text-sm" />
                                     </div>
                                     <input
                                         type={showPassword ? "text" : "password"}
@@ -156,30 +156,39 @@ const LoginPage = () => {
                                         value={formData.password}
                                         onChange={handleChange}
                                         placeholder="••••••••"
-                                        className="w-full pl-11 pr-12 py-4 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-4 focus:ring-yellow-500/10 transition-all"
+                                        className="w-full pl-9 pr-10 py-2.5 bg-white/5 border border-white/10 rounded-xl text-sm text-white placeholder-gray-600 focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/10 transition-all"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-white transition-colors"
+                                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-white transition-colors"
                                     >
-                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                        {showPassword ? <FaEyeSlash className="text-sm" /> : <FaEye className="text-sm" />}
                                     </button>
                                 </div>
+                            </div>
+
+                            <div className="flex justify-end">
+                                <Link 
+                                    to="/forgot-password" 
+                                    className="text-[10px] font-bold text-gray-400 hover:text-yellow-500 transition-colors"
+                                >
+                                    Forgot Password?
+                                </Link>
                             </div>
 
                             {/* Submit Button */}
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full group relative overflow-hidden bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-yellow-500/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+                                className="w-full group relative overflow-hidden bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 mt-2 rounded-xl transition-all duration-300 shadow-lg shadow-yellow-500/20 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
                             >
-                                <div className="relative z-10 flex items-center justify-center gap-2">
+                                <div className="relative z-10 flex items-center justify-center gap-2 text-sm">
                                     {loading ? (
                                         <InlineSpinner size="sm" color="black" />
                                     ) : (
                                         <>
-                                            SIGN IN <FaChevronRight className="text-xs" />
+                                            SIGN IN <FaChevronRight className="text-[10px]" />
                                         </>
                                     )}
                                 </div>
@@ -187,31 +196,30 @@ const LoginPage = () => {
                             </button>
                         </form>
 
-                        <div className="mt-8">
-                            <div className="relative mb-6">
+                        <div className="mt-6">
+                            <div className="relative mb-5">
                                 <div className="absolute inset-0 flex items-center">
                                     <div className="w-full border-t border-white/10"></div>
                                 </div>
-                                <div className="relative flex justify-center text-sm">
-                                    <span className="px-4 bg-[#0f172a] text-gray-500 font-medium">Or continue with</span>
+                                <div className="relative flex justify-center text-xs">
+                                    <span className="px-3 bg-[#0f172a] text-gray-500 font-medium">Or continue with</span>
                                 </div>
                             </div>
 
-                            <div className="flex justify-center">
+                            <div className="flex justify-center transform scale-90">
                                 <GoogleLogin
                                     onSuccess={handleGoogleSuccess}
                                     onError={() => showMessage("Google Login failed", "error")}
                                     useOneTap
                                     theme="filled_black"
                                     shape="pill"
-                                    width="100%"
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <p className="text-center mt-6 text-gray-400 text-sm">
+                <p className="text-center mt-4 text-gray-400 text-xs">
                     Don't have an account?{' '}
                     <Link to="/register" className="text-yellow-500 hover:text-yellow-400 font-bold transition-colors">
                         Register here
