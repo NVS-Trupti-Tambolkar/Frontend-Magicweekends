@@ -504,38 +504,30 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
                     {/* Step 3: Payment Method */}
                     {currentStep === 3 && (
                         <div className="space-y-6">
-                            <h3 className="text-xl font-bold text-gray-900 mb-4">Select Booking Option</h3>
+                            <h3 className="text-xl font-bold text-gray-900 mb-4">Select Payment Method</h3>
                             
                             <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4 text-sm text-yellow-800">
-                                <p><strong>Note:</strong> If you done payment online your have to pay extra for RAZORPAY. Choose the Whatsapp option to save your money!</p>
+                                <p><strong>Note:</strong> Online payment incurs an extra fee for RAZORPAY. Choose the Whatsapp option to save your money!</p>
                             </div>
 
-                            <div className="space-y-4">
-                                <button
-                                    onClick={handleWhatsappBooking}
-                                    className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-500 hover:bg-green-600 text-white rounded-xl shadow-md transition-all font-bold text-lg"
-                                >
-                                    <FaWhatsapp className="w-6 h-6" />
-                                    Message me on Whatsapp <span className="text-green-100 text-sm font-normal tracking-wide">(save your money)</span>
-                                </button>
+                            <button
+                                onClick={handleWhatsappBooking}
+                                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-500 hover:bg-green-600 text-white rounded-xl shadow-md transition-all font-bold text-lg mb-6 hover:-translate-y-1"
+                            >
+                                <FaWhatsapp className="w-6 h-6" />
+                                Message me on Whatsapp <span className="text-green-100 text-sm font-normal tracking-wide">(save your money)</span>
+                            </button>
 
-                                <div className="text-center text-gray-400 font-bold uppercase text-xs py-1">OR</div>
-
-                                <button
-                                    onClick={() => {
-                                        if (!user) {
-                                            navigate('/register');
-                                            onClose();
-                                            return;
-                                        }
-                                        setFormData(prev => ({ ...prev, payment_method: 'paytm' }));
-                                        handleNext();
-                                    }}
-                                    className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-xl transition-all font-bold border border-gray-200"
-                                >
-                                    Register and book online
-                                </button>
+                            <div className="flex items-center justify-center mb-6">
+                                <div className="h-px bg-gray-200 w-1/4"></div>
+                                <span className="px-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Or Pay Online</span>
+                                <div className="h-px bg-gray-200 w-1/4"></div>
                             </div>
+
+                            <PaymentMethodSelector
+                                selectedMethod={formData.payment_method}
+                                onSelect={(method) => setFormData(prev => ({ ...prev, payment_method: method }))}
+                            />
                         </div>
                     )}
 
@@ -643,9 +635,17 @@ const BookingForm = ({ isOpen, onClose, tripData, tripType }) => {
                         </button>
                     )}
 
-                    {currentStep < 4 && currentStep !== 3 && (
+                    {currentStep < 4 && (
                         <button
-                            onClick={handleNext}
+                            onClick={(e) => {
+                                if (currentStep === 3 && !user) {
+                                    // if they chose online pay but aren't logged in
+                                    navigate('/register');
+                                    onClose();
+                                    return;
+                                }
+                                handleNext(e);
+                            }}
                             className="ml-auto px-8 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors font-bold shadow-lg"
                         >
                             Next
