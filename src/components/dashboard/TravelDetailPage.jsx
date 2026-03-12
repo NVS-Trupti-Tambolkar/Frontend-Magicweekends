@@ -493,20 +493,25 @@ const TravelDetailPage = () => {
 
   // Render itinerary day component
   const ItineraryDay = ({ day }) => {
+    // formatItineraryDate already returns "Day X" if no selected date, or "Day X: [Date]"
     const displayDate = formatItineraryDate(selectedDate, day.day);
     
     return (
-      <div className="border-l-2 border-yellow-500 pl-4 pb-6 relative last:pb-0">
-        <div className="absolute w-3 h-3 bg-yellow-500 rounded-full -left-[7px] top-3"></div>
-        <div className="flex justify-between items-start mb-1">
+      <div className="border-l-[3px] border-yellow-400 pl-6 pb-8 relative last:pb-0 group mt-4">
+        <div className="absolute w-4 h-4 bg-yellow-500 rounded-full -left-[10px] top-1 shadow-[0_0_0_4px_rgba(234,179,8,0.2)] group-hover:scale-125 transition-transform duration-300"></div>
+        <div className="flex justify-between items-start mb-3">
           <div className="flex flex-col">
-            <span className="text-yellow-600 font-bold text-xs tracking-widest uppercase">Day {day.day} • {displayDate}</span>
-            <h4 className="text-base font-bold text-gray-900">{day.title}</h4>
+            <div className="inline-flex items-center space-x-2 w-fit mb-2">
+              <span className="text-yellow-700 font-black text-xs tracking-widest uppercase bg-yellow-100 px-3 py-1 rounded-md shadow-sm border border-yellow-200/50">
+                {displayDate}
+              </span>
+            </div>
+            <h4 className="text-xl font-extrabold text-slate-800 leading-tight group-hover:text-yellow-600 transition-colors">{day.title}</h4>
           </div>
           {(user?.role === 'admin' || user?.role === 'manager') && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 bg-white rounded-lg shadow-sm border border-gray-100 p-1">
               <button
-                className="text-gray-400 hover:text-yellow-600 transition-colors p-1"
+                className="text-gray-400 hover:text-yellow-600 hover:bg-yellow-50 transition-colors p-2 rounded-md"
                 title="Edit Itinerary"
                 onClick={() => handleEditItinerary(day)}
               >
@@ -514,7 +519,7 @@ const TravelDetailPage = () => {
               </button>
               {user?.role === 'admin' && (
                 <button
-                  className="text-gray-400 hover:text-red-600 transition-colors p-1"
+                  className="text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors p-2 rounded-md"
                   title="Delete Itinerary"
                   onClick={() => handleDeleteItinerary(day.id)}
                 >
@@ -524,10 +529,33 @@ const TravelDetailPage = () => {
             </div>
           )}
         </div>
-        <p className="text-gray-600 text-xs mb-2">{Array.isArray(day.activities) ? day.activities.join(' • ') : day.activities}</p>
-        <div className="flex gap-4 text-[10px] text-gray-500">
-          {day.meals && <span className="flex items-center"><FaUtensils className="mr-1 text-yellow-500" /> {day.meals}</span>}
-          {day.accommodation && <span className="flex items-center"><FaBed className="mr-1 text-yellow-500" /> {day.accommodation}</span>}
+        
+        {/* Improved Activity Description Display */}
+        <div className="text-slate-600 text-sm md:text-base leading-relaxed mb-4 bg-slate-50 p-4 rounded-xl border border-slate-100 break-words whitespace-pre-wrap">
+          {Array.isArray(day.activities) 
+            ? <ul className="space-y-2">
+                {day.activities.filter(a => a && a.trim()).map((activity, i) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-yellow-500 mr-3 mt-1 font-bold">•</span>
+                    <span>{activity}</span>
+                  </li>
+                ))}
+              </ul>
+            : day.activities
+          }
+        </div>
+
+        <div className="flex flex-wrap gap-3 text-xs font-semibold">
+          {day.meals && (
+            <span className="flex items-center bg-orange-50 text-orange-700 px-3 py-1.5 rounded-lg border border-orange-100">
+              <FaUtensils className="mr-2 text-orange-500" /> {day.meals}
+            </span>
+          )}
+          {day.accommodation && (
+            <span className="flex items-center bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg border border-blue-100">
+              <FaBed className="mr-2 text-blue-500" /> {day.accommodation}
+            </span>
+          )}
         </div>
       </div>
     );
