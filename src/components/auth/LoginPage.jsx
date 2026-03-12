@@ -211,7 +211,14 @@ const LoginPage = () => {
                     </div>
                 </div>
 
-                <p className="text-center mt-8 text-gray-500 text-xs">
+                <p className="text-center mt-6 text-gray-400 text-sm">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="text-yellow-500 hover:text-yellow-400 font-bold transition-colors">
+                        Register here
+                    </Link>
+                </p>
+
+                <p className="text-center mt-6 text-gray-500 text-xs">
                     © 2024 MAGIC WEEKENDS. All rights reserved.
                 </p>
             </div>

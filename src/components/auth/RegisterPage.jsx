@@ -317,7 +317,14 @@ const RegisterPage = () => {
                     </div>
                 </div>
                 
-                <p className="text-center text-gray-500 text-sm mt-8">
+                <p className="text-center mt-6 text-gray-400 text-sm">
+                    Already have an account?{' '}
+                    <Link to="/login" className="text-yellow-500 hover:text-yellow-400 font-bold transition-colors">
+                        Login here
+                    </Link>
+                </p>
+
+                <p className="text-center text-gray-500 text-sm mt-6">
                     &copy; 2024 Magic Weekends Admin Panel.
                 </p>
             </div>
