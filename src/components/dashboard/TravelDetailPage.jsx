@@ -41,6 +41,10 @@ const TravelDetailPage = () => {
   const [editingBaseInfo, setEditingBaseInfo] = useState({ duration: '', departure: '', groupSize: '', available_days: '' });
   const [isEditingDates, setIsEditingDates] = useState(false);
   const [tempDates, setTempDates] = useState([]);
+  const [isEditingHighlights, setIsEditingHighlights] = useState(false);
+  const [isEditingThingsToCarry, setIsEditingThingsToCarry] = useState(false);
+  const [editingHighlightsText, setEditingHighlightsText] = useState('');
+  const [editingThingsToCarryText, setEditingThingsToCarryText] = useState('');
 
   // Snackbar state
   const [snackbar, setSnackbar] = useState({
@@ -258,6 +262,8 @@ const TravelDetailPage = () => {
       setEditingOverviewText(travelPackage.overview || '');
       setEditingInclusionsText(Array.isArray(travelPackage.inclusions) ? travelPackage.inclusions.join(', ') : travelPackage.inclusions || '');
       setEditingExclusionsText(Array.isArray(travelPackage.exclusions) ? travelPackage.exclusions.join(', ') : travelPackage.exclusions || '');
+      setEditingHighlightsText(Array.isArray(travelPackage.highlights) ? travelPackage.highlights.join(', ') : travelPackage.highlights || '');
+      setEditingThingsToCarryText(Array.isArray(travelPackage.thingsToCarry) ? travelPackage.thingsToCarry.join(', ') : travelPackage.thingsToCarry || '');
     }
   }, [travelPackage]);
 
@@ -630,6 +636,95 @@ const TravelDetailPage = () => {
     }
   };
 
+  const handleUpdateHighlights = async () => {
+    try {
+      setUpdating(true);
+      setUpdateMessage('Updating Highlights...');
+      const endpoint = tripType === 'weekend' ? '/WeekendTrip/updateWeekendTrip' : '/Trip/updateTrip';
+      const response = await api.put(endpoint, {
+        id: id,
+        highlights: editingHighlightsText
+      });
+      if (response.data.success) {
+        setTravelPackage(prev => ({ 
+          ...prev, 
+          highlights: editingHighlightsText.split(',').map(h => h.trim()).filter(h => h !== "") 
+        }));
+        setIsEditingHighlights(false);
+        showMessage('Highlights updated successfully!');
+      }
+    } catch (error) {
+      console.error('Error updating highlights:', error);
+      showMessage('Failed to update highlights.', 'error');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleUpdateThingsToCarry = async () => {
+    try {
+      setUpdating(true);
+      setUpdateMessage('Updating Things to Carry...');
+      const endpoint = tripType === 'weekend' ? '/WeekendTrip/updateWeekendTrip' : '/Trip/updateTrip';
+      const response = await api.put(endpoint, {
+        id: id,
+        things_to_carry: editingThingsToCarryText
+      });
+      if (response.data.success) {
+        setTravelPackage(prev => ({ 
+          ...prev, 
+          thingsToCarry: editingThingsToCarryText.split(',').map(t => t.trim()).filter(t => t !== "") 
+        }));
+        setIsEditingThingsToCarry(false);
+        showMessage('Things to carry updated successfully!');
+      }
+    } catch (error) {
+      console.error('Error updating things to carry:', error);
+      showMessage('Failed to update things to carry.', 'error');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleDeleteHighlight = async (index) => {
+    if (!window.confirm("Are you sure you want to remove this highlight?")) return;
+    const newHighlights = travelPackage.highlights.filter((_, i) => i !== index);
+    const highlightsStr = newHighlights.join(', ');
+    try {
+      setUpdating(true);
+      setUpdateMessage('Deleting Highlight...');
+      const endpoint = tripType === 'weekend' ? '/WeekendTrip/updateWeekendTrip' : '/Trip/updateTrip';
+      const response = await api.put(endpoint, { id: id, highlights: highlightsStr });
+      if (response.data.success) {
+        setTravelPackage(prev => ({ ...prev, highlights: newHighlights }));
+        showMessage('Highlight removed');
+      }
+    } catch (err) {
+      showMessage('Failed to remove highlight', 'error');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const handleDeleteThingToCarry = async (index) => {
+    if (!window.confirm("Are you sure you want to remove this item?")) return;
+    const newItems = travelPackage.thingsToCarry.filter((_, i) => i !== index);
+    const carryStr = newItems.join(', ');
+    try {
+      setUpdating(true);
+      setUpdateMessage('Deleting Item...');
+      const endpoint = tripType === 'weekend' ? '/WeekendTrip/updateWeekendTrip' : '/Trip/updateTrip';
+      const response = await api.put(endpoint, { id: id, things_to_carry: carryStr });
+      if (response.data.success) {
+        setTravelPackage(prev => ({ ...prev, thingsToCarry: newItems }));
+        showMessage('Item removed');
+      }
+    } catch (err) {
+      showMessage('Failed to remove item', 'error');
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   const handleAddGallery = () => {
     setEditingGalleryItem({
@@ -1141,22 +1236,68 @@ const TravelDetailPage = () => {
                     </div>
                     <p className="text-gray-700 mb-6 text-sm leading-relaxed whitespace-pre-wrap">{travelPackage.overview}</p>
 
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Highlights</h3>
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-lg font-bold text-gray-900">Highlights</h3>
+                      {(user?.role === 'admin' || user?.role === 'manager') && (
+                        <button
+                          onClick={() => {
+                            setEditingHighlightsText(Array.isArray(travelPackage.highlights) ? travelPackage.highlights.join(', ') : travelPackage.highlights || '');
+                            setIsEditingHighlights(true);
+                          }}
+                          className="text-yellow-600 hover:text-yellow-700 p-2 rounded-full hover:bg-yellow-50 transition-all"
+                          title="Edit Highlights"
+                        >
+                          <FaEdit className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                     <ul className="space-y-4 mb-8">
                       {travelPackage.highlights.map((highlight, index) => (
-                        <li key={index} className="flex items-start bg-gradient-to-r from-green-50 to-white p-3 rounded-xl">
+                        <li key={index} className="flex items-start bg-gradient-to-r from-green-50 to-white p-3 rounded-xl group/item">
                           <FaCheck className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700 text-sm">{highlight}</span>
+                          <span className="text-gray-700 text-sm flex-grow">{highlight}</span>
+                          {(user?.role === 'admin' || user?.role === 'manager') && (
+                            <button
+                              onClick={() => handleDeleteHighlight(index)}
+                              className="text-gray-400 hover:text-red-500 opacity-0 group-hover/item:opacity-100 transition-all p-1"
+                              title="Delete Highlight"
+                            >
+                              <FaTrash className="w-3 h-3" />
+                            </button>
+                          )}
                         </li>
                       ))}
                     </ul>
 
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Things to Carry</h3>
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-lg font-bold text-gray-900">Things to Carry</h3>
+                      {(user?.role === 'admin' || user?.role === 'manager') && (
+                        <button
+                          onClick={() => {
+                            setEditingThingsToCarryText(Array.isArray(travelPackage.thingsToCarry) ? travelPackage.thingsToCarry.join(', ') : travelPackage.thingsToCarry || '');
+                            setIsEditingThingsToCarry(true);
+                          }}
+                          className="text-yellow-600 hover:text-yellow-700 p-2 rounded-full hover:bg-yellow-50 transition-all"
+                          title="Edit Things to Carry"
+                        >
+                          <FaEdit className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {travelPackage.thingsToCarry.map((item, index) => (
-                        <li key={index} className="flex items-center bg-gradient-to-r from-blue-50 to-white p-3 rounded-xl">
+                        <li key={index} className="flex items-center bg-gradient-to-r from-blue-50 to-white p-3 rounded-xl group/item">
                           <FaCheck className="w-4 h-4 text-blue-500 mr-2" />
-                          <span className="text-gray-700 text-sm">{item}</span>
+                          <span className="text-gray-700 text-sm flex-grow">{item}</span>
+                          {(user?.role === 'admin' || user?.role === 'manager') && (
+                            <button
+                              onClick={() => handleDeleteThingToCarry(index)}
+                              className="text-gray-400 hover:text-red-500 opacity-0 group-hover/item:opacity-100 transition-all p-1"
+                              title="Delete Item"
+                            >
+                              <FaTrash className="w-3 h-3" />
+                            </button>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -1830,6 +1971,87 @@ const TravelDetailPage = () => {
                   className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2.5 px-6 rounded-lg transition-all shadow-md active:scale-95 text-sm"
                 >
                   Update Dates
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Edit Highlights Modal */}
+      {isEditingHighlights && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-[100] p-2 sm:p-4">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-[95vw] sm:max-w-lg overflow-hidden animate-fadeIn">
+            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-3 sm:p-4 border-b border-yellow-300 flex justify-between items-center">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900">Edit Highlights</h3>
+              <button onClick={() => setIsEditingHighlights(false)} className="text-black/50 hover:text-black bg-white/30 rounded-full p-1 transition-colors">
+                <FaTimes />
+              </button>
+            </div>
+            <div className="p-4 sm:p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Trip Highlights (comma separated)</label>
+                <textarea
+                  value={editingHighlightsText}
+                  onChange={(e) => setEditingHighlightsText(e.target.value)}
+                  rows="6"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-yellow-500 focus:ring-4 focus:ring-yellow-500/10 transition-all text-sm leading-relaxed"
+                  placeholder="e.g. Scenic Views, Luxury Stay, Professional Guide..."
+                ></textarea>
+                <p className="text-[10px] text-gray-400 mt-1 italic">Items will be displayed as a list.</p>
+              </div>
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  onClick={() => setIsEditingHighlights(false)}
+                  className="px-5 py-2.5 text-gray-600 font-bold hover:text-black hover:bg-gray-100 rounded-lg transition-all text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpdateHighlights}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2.5 px-6 rounded-lg transition-all shadow-md active:scale-95 text-sm"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Things to Carry Modal */}
+      {isEditingThingsToCarry && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center z-[100] p-2 sm:p-4">
+          <div className="bg-white rounded-xl sm:rounded-2xl shadow-2xl w-full max-w-[95vw] sm:max-w-lg overflow-hidden animate-fadeIn">
+            <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-3 sm:p-4 border-b border-yellow-300 flex justify-between items-center">
+              <h3 className="text-base sm:text-lg font-bold text-gray-900">Edit Things to Carry</h3>
+              <button onClick={() => setIsEditingThingsToCarry(false)} className="text-black/50 hover:text-black bg-white/30 rounded-full p-1 transition-colors">
+                <FaTimes />
+              </button>
+            </div>
+            <div className="p-4 sm:p-6 space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Things to Carry (comma separated)</label>
+                <textarea
+                  value={editingThingsToCarryText}
+                  onChange={(e) => setEditingThingsToCarryText(e.target.value)}
+                  rows="6"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-yellow-500 focus:ring-4 focus:ring-yellow-500/10 transition-all text-sm leading-relaxed"
+                  placeholder="e.g. Trekking Shoes, Sunscreen, Water Bottle..."
+                ></textarea>
+                <p className="text-[10px] text-gray-400 mt-1 italic">Items will be displayed as a grid.</p>
+              </div>
+              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  onClick={() => setIsEditingThingsToCarry(false)}
+                  className="px-5 py-2.5 text-gray-600 font-bold hover:text-black hover:bg-gray-100 rounded-lg transition-all text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleUpdateThingsToCarry}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2.5 px-6 rounded-lg transition-all shadow-md active:scale-95 text-sm"
+                >
+                  Save Changes
                 </button>
               </div>
             </div>
