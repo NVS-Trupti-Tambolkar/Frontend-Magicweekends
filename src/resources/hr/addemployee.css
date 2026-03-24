@@ -1,0 +1,823 @@
+.employee-container {
+  min-height: 100vh;
+  /* padding: 2rem; */
+  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+  width: 80%;
+  /* margin: 0 auto; */
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4b5563;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.3s;
+  background: none;
+  border: none;
+}
+
+.back-button:hover {
+  color: #111827;
+}
+
+/* .form-container {
+  max-width: 1024px;
+  margin: 0 auto;
+} */
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  /* Reduced slightly for consistency */
+}
+
+.image-upload {
+  margin-bottom: 1rem;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 160px;
+  border: 2px dashed #d1d5db;
+  border-radius: 50%;
+  cursor: pointer;
+  background: white;
+  transition: border-color 0.3s;
+}
+
+.upload-label:hover {
+  border-color: #fb923c;
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Ensure text is centered */
+  gap: 0.5rem;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  /* Consistent font size */
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-section h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 0.5rem;
+  /* Adjusted for tighter spacing */
+}
+
+.progress-barr {
+  font-size: 1rem;
+  color: #374151;
+  margin-top: 0.5rem;
+}
+
+.newform-section {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
+  overflow-x: auto;
+}
+
+.newform-section .profile-section {
+  margin-bottom: 1rem;
+  /* Reduced margin when inside newform-section */
+}
+
+.newform-section h2 {
+  color: #ea580c;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+
+.form-grid1 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #fb923c;
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.hrtable-container {
+  overflow-x: auto;
+}
+
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.details-table th,
+.details-table td {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.details-table th {
+  background: #f9fafb;
+  font-weight: 500;
+}
+
+.details-table input,
+.details-table select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+}
+
+.upload-table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.upload-table td:first-child {
+  text-align: left;
+}
+
+.upload-table td:last-child {
+  text-align: right;
+}
+
+.upload-button {
+  background-color: #ffa500;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: background-color 0.3s;
+}
+
+.upload-button:hover {
+  background-color: #ff8c00;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.submit-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, #2e6d1d, #4d6d42);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.submit-button:hover {
+  opacity: 0.9;
+}
+
+.cancel-button {
+  padding: 0.75rem 1.5rem;
+  background: #e74646;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.cancel-button:hover {
+  opacity: 0.9;
+}
+
+.prev-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, #fb923c, #fbbf24);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.prev-button:hover {
+  opacity: 0.9;
+}
+
+/* Styling for Add Emergency Contact and Add Family Member buttons */
+.add-emergency-button,
+.add-family-button {
+  background-color: #4CAF50;
+  /* Green, consistent with submit-button */
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.add-emergency-button:hover,
+.add-family-button:hover {
+  background-color: #45a049;
+  /* Slightly darker green on hover */
+}
+
+.add-emergency-button:focus,
+.add-family-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+/* Error message styling, consistent with other forms */
+.error-message {
+  color: #d32f2f;
+  /* Red for errors */
+  font-size: 0.8rem;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+/* Table container styling */
+.hrtable-container {
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+/* Details table styling */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.details-table th,
+.details-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.details-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.details-table input,
+.details-table select {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.details-table input:focus,
+.details-table select:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* Remove button styling */
+.remove-button {
+  background-color: #d32f2f;
+  /* Red for remove action */
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.remove-button:disabled {
+  background-color: #e57373;
+  cursor: not-allowed;
+}
+
+.remove-button:hover:not(:disabled) {
+  background-color: #b71c1c;
+}
+
+/* Form section styling */
+.newform-section {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+/* Button container styling */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Existing button styles (for consistency) */
+.cancel-button,
+.prev-button,
+.submit-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.prev-button {
+  background-color: #0288d1;
+  color: white;
+}
+
+.prev-button:hover {
+  background-color: #0277bd;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+/* Form container */
+.newform-section {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; */
+}
+
+/* Headings */
+.newform-section h2 {
+  font-size: 1.5rem;
+  color: #333333;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Section description */
+.section-description {
+  font-size: 0.9rem;
+  color: #666666;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+/* Table container for responsiveness */
+.hrtable-container {
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+/* Details table */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+.details-table th,
+.details-table td {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+  vertical-align: top;
+}
+
+.details-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333333;
+  font-size: 0.9rem;
+}
+
+.details-table td {
+  font-size: 0.9rem;
+}
+
+/* S.No column */
+.details-table td:first-child {
+  width: 50px;
+  text-align: center;
+}
+
+/* Inputs within table */
+.details-table input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.details-table input::placeholder {
+  color: #999999;
+}
+
+.details-table input:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+/* Error messages */
+.error-message {
+  color: #d32f2f;
+  font-size: 0.8rem;
+  margin-top: 4px;
+  margin-bottom: 0;
+  line-height: 1.2;
+}
+
+/* Add Emergency Contact and Add Family Member buttons */
+.add-emergency-button,
+.add-family-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.add-emergency-button:hover,
+.add-family-button:hover {
+  background-color: #45a049;
+}
+
+.add-emergency-button:focus,
+.add-family-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+.add-emergency-button:active,
+.add-family-button:active {
+  transform: scale(0.98);
+}
+
+/* Remove button */
+.remove-button {
+  background-color: #d32f2f;
+  color: #ffffff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.remove-button:disabled {
+  background-color: #ef9a9a;
+  cursor: not-allowed;
+}
+
+.remove-button:hover:not(:disabled) {
+  background-color: #b71c1c;
+}
+
+.remove-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.3);
+}
+
+.remove-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+/* Form buttons */
+.cancel-button,
+.prev-button,
+.submit-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+/* Add Nominee button */
+.add-nominee-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.add-nominee-button:hover {
+  background-color: #45a049;
+}
+
+.add-nominee-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+.add-nominee-button:active {
+  transform: scale(0.98);
+}
+
+.prev-button {
+  background-color: #0288d1;
+  color: #ffffff;
+}
+
+.prev-button:hover {
+  background-color: #0277bd;
+}
+
+.prev-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(2, 136, 209, 0.3);
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+.cancel-button:active,
+.prev-button:active,
+.submit-button:active {
+  transform: scale(0.98);
+}
+
+/* Add Training and Add Employment buttons */
+.add-training-button,
+.add-employment-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.add-training-button:hover,
+.add-employment-button:hover {
+  background-color: #45a049;
+}
+
+.add-training-button:focus,
+.add-employment-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+.add-training-button:active,
+.add-employment-button:active {
+  transform: scale(0.98);
+}
+
+/* Add Missing Year and Add Reference buttons */
+.add-missing-button,
+.add-reference-button {
+  background-color: #4CAF50;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.add-missing-button:hover,
+.add-reference-button:hover {
+  background-color: #45a049;
+}
+
+.add-missing-button:focus,
+.add-reference-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+.add-missing-button:active,
+.add-reference-button:active {
+  transform: scale(0.98);
+}
+
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .newform-section {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .details-table th,
+  .details-table td {
+    padding: 8px;
+  }
+
+  .details-table input {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cancel-button,
+  .prev-button,
+  .submit-button,
+  .add-emergency-button,
+  .add-family-button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .remove-button {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .error-message {
+    font-size: 0.75rem;
+  }
+
+  .hrtable-container {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newform-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .section-description {
+    font-size: 0.85rem;
+  }
+
+  .details-table th,
+  .details-table td {
+    font-size: 0.8rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .employee-container {
+    padding: 1.5rem;
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full-width {
+    grid-column: span 1;
+  }
+
+  .newform-section {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .upload-label {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-section h1 {
+    font-size: 1.25rem;
+  }
+
+  .newform-section h2 {
+    font-size: 1.125rem;
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .submit-button,
+  .cancel-button,
+  .prev-button {
+    width: 100%;
+  }
+
+  .newform-section .profile-section {
+    margin-bottom: 0.5rem;
+    /* Tighter spacing on small screens */
+  }
+}

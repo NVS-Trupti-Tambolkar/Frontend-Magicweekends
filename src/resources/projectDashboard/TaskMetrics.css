@@ -1,0 +1,37 @@
+.task-metrics {
+    padding: 0.5rem;
+  }
+  
+  .metrics-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  
+  .metrics-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .metrics-row {
+    display: flex;
+    font-size: 0.875rem;
+  }
+  
+  .metrics-details {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* .metrics-value {
+    font-size: 0.875rem;
+  } */
+  
+  .metrics-divider {
+    margin: 0 0.5rem;
+    color: #ccc;
+  }
+  
+  

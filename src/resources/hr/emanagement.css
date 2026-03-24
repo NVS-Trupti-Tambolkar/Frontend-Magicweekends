@@ -1,0 +1,182 @@
+:root {
+  --hero-icon-color: #ff6b35;
+  --hero-icon-font-size: 4rem;
+  --hero-icon-margin-left: 2rem;
+}
+
+/* Sidebar */
+.HR-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.HR-sidebar ul:hover {
+  color: #fff;
+}
+
+.HR-sidebar ul li {
+  width: 100%;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  margin: 0.5rem -5px;
+  box-shadow: -10px 10px 10px -10px;
+  padding: 20px 10px;
+}
+
+.HR-sidebar ul li:hover,
+.HR-sidebar ul li.active-link {
+  background: linear-gradient(135deg, #ef3c0d, #ffde6a);
+  color: #fff;
+}
+
+.HR-sidebar ul li a {
+  color: inherit;
+  display: block;
+}
+
+/* Hero Section */
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 2px solid orange;
+  flex-wrap: wrap;
+}
+
+/* Hero Icon */
+.hero-icon {
+  display: block;
+  margin-left: var(--hero-icon-margin-left);
+  color: var(--hero-icon-color);
+  font-size: var(--hero-icon-font-size);
+}
+
+.hero-text-container {
+  text-align: center;
+  max-width: 500px;
+}
+
+.hero-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #f97316;
+}
+
+.hero-text {
+  color: #d1d5db;
+  margin-bottom: 1.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Hero Image */
+.hero-image-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.hero-image-container {
+  position: relative;
+  width: 20rem;
+  padding: 10px;
+  height: 14rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hero-main-image {
+  width: 100%;
+  height: 105%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Small Floating Image (if needed in future) */
+.hero-small-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Styles */
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+
+  .hero-buttons {
+    justify-content: flex-start;
+  }
+
+  .hero-text-container {
+    text-align: left;
+  }
+
+  .hero-image-wrapper {
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+
+  .hero-image-container {
+    width: 35rem;
+    height: 16rem;
+  }
+
+  .hero-small-image {
+    width: 10rem;
+  }
+
+  .hero-icon {
+    margin-left: var(--hero-icon-margin-left, 2rem);
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-layout {
+    display: flex;
+    width: 100%;
+    /* flex-direction: column; */
+  }
+
+  .HR-sidebar {
+    width: 100%;
+  }
+
+  .hero-container {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .HR-sidebar {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .hero-icon {
+    margin: 0 auto;
+    margin-left: 8rem;
+    font-size: 2.5rem;
+    text-align: center;
+  }
+}

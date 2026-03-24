@@ -1,0 +1,357 @@
+/* General Styles */
+/* In your login.css file */
+
+.login-container {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  /* background-image: url('../../assets/erp.jpeg');  */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); */
+  z-index: 1;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+/* .main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-height: 86vh;
+} */
+
+.content-wrapper {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.title-container {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #003366;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #888;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: 30%;
+  height: auto;
+  padding: 20px;
+  border-radius: 30px;
+  margin-left: 700px;
+  box-shadow: 0 6px 8px 0 white;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 250px;
+  /* Set a fixed width for the logo */
+  height: auto;
+  /* Ensure the aspect ratio of the logo is maintained */
+  max-width: 100%;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  padding-left: 40px;
+  /* Add padding for the icon */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input-icon,
+.password-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 12px;
+  font-size: 18px;
+  color: #333;
+}
+
+.hidepassword-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -12px;
+  font-size: 18px;
+  color: #333;
+}
+
+.toggle-password {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+button.login-button[type="submit"] {
+  background-color: #003366;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+button.login-button[type="submit"]:hover {
+  background-color: #00244e;
+}
+
+.form-links {
+  /* display: flex;
+  justify-content: space-between; */
+  margin-top: 15px;
+  text-align: center;
+}
+
+.link {
+  color: #003366;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.image-section {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.side-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Responsive Styles */
+/* Responsive Styles */
+
+/* General adjustments for medium-sized tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .login-card {
+    width: 60%;
+    height: auto;
+    padding: 20px;
+    margin-left: 0;
+  }
+
+  /* .logo {
+      width: 200px;
+      height: auto;
+    } */
+
+  .form-title {
+    font-size: 22px;
+  }
+
+  .input-field {
+    padding: 10px 10px 10px 35px;
+    /* Adjust padding for smaller fields */
+    font-size: 16px;
+  }
+
+  .login-button {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .form-links {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+/* Smaller tablets and large phones (max-width: 768px) */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-card {
+    width: 80%;
+    height: auto;
+    margin: 0;
+    padding: 15px;
+  }
+
+  /* .logo {
+      width: 120px;
+      height: auto;
+    } */
+
+  .form-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .input-field {
+    padding: 10px 10px 10px 35px;
+    font-size: 14px;
+  }
+
+  .toggle-password {
+    right: 30px;
+  }
+
+  button.login-button[type="submit"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .form-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .link {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Small phones (max-width: 480px) */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 40px;
+  }
+
+  .login-card {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    border-radius: 15px;
+    /* Slightly smaller border radius for compact view */
+  }
+
+  .logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  .form-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .input-field {
+    padding: 8px 8px 8px 30px;
+    /* Adjust padding for smaller input fields */
+    font-size: 12px;
+  }
+
+  .toggle-password {
+    right: 25px;
+  }
+
+  button.login-button[type="submit"] {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .form-links {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .link {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+}

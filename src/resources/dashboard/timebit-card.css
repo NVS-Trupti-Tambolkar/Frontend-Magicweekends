@@ -1,0 +1,89 @@
+.timebit-card {
+  text-align: center;
+}
+
+.timebit-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+/* Center the toggle-container */
+.toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.timebit-toggle {
+  position: relative;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  height: 3rem;
+  width: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  background: #3b82f6; /* Blue for Remote */
+  border-radius: 9999px;
+  height: 90%;
+  width: 50%;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  z-index: 0;
+}
+
+.toggle-option {
+  position: relative;
+  flex: 1;
+  z-index: 1;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #6b7280; /* Default text color */
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease;
+  border-radius: 9999px;
+}
+
+.toggle-option.active {
+  color: white;
+  z-index: 2;
+}
+
+.toggle-option:not(.active):hover {
+  color: #374151; /* Darker gray on hover */
+}
+
+.toggle-slider {
+  background: #3b82f6; 
+  /* background: #f6ab3b;  */
+}
+
+.toggle-slider[style*="translateX(100%)"] {
+  background: #10b981; /* Green for Office */
+}
+
+.start-button {
+  width: 100%;
+  background: #3b82f6;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.start-button:hover {
+  background: #2563eb;
+}

@@ -1,0 +1,272 @@
+.container {
+  padding: 1.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.NewSession-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.NewSession-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #f97316, #facc15);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #fb923c, #fbbf24);
+  border: none;
+  border-radius: 0.375rem;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.add-button:hover {
+  opacity: 0.9;
+}
+
+.add-button svg {
+  margin-right: 0.5rem;
+}
+
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.NewSession-card {
+  background: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.3s;
+}
+
+.NewSession-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.NewSession-card-header {
+  padding: 0.5rem;
+  background: linear-gradient(to right, #ffedd5, #fef3c7);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.card-header-content {
+  display: flex;
+  justify-content: space-between;
+  /* align-items: flex-start; */
+}
+
+.NewSession-card-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: #9a3412;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: #ea580c;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.action-button:hover {
+  color: #9a3412;
+}
+
+.card-content {
+  padding: 1rem;
+  gap: 0px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  color: #c2410c;
+}
+
+.info-item svg {
+  margin-right: 0.5rem;
+}
+
+.description {
+  color: #4b5563;
+  margin-top: 0.5rem;
+  text-align: justify;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.trainingmodal {
+  background: white;
+  border-radius: 0.5rem;
+  padding: 2.0rem;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.form-input,
+.form-textarea {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  width: 100%;
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.trainingform-row {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  gap: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cancel-icon {
+  position: absolute;
+  top: 2.5rem;
+  font-size: 1.0rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: color 0.2sease-in-out;
+  right: 28.1rem;
+}
+
+.cancel-icon:hover {
+  color: #ef4444;
+  /* Red color on hover */
+}
+
+/* .close-modal-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #aaa;
+  }
+  
+  .close-modal-button:hover {
+    color: #555;
+  } */
+
+.tdsubmit-button {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #fb923c, #fbbf24);
+  border: none;
+  border-radius: 0.375rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .sessions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .sessions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .NewSession-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .NewSession-title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+  }
+}

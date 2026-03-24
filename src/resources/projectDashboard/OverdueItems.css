@@ -1,0 +1,153 @@
+/* OverdueItems.css */
+.overdue-items {
+  padding: 0.5rem;
+  height: 180px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+}
+
+.metrics-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.metrics-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  overflow-y: auto; /* Enable vertical scrolling */
+  flex-grow: 1; /* Allow content area to grow and fill available space */
+}
+
+.metrics-row {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  overflow: hidden;
+}
+
+.task-name {
+  max-width: 65%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.days-value {
+  font-weight: 500;
+  margin-left: 0.25rem;
+  white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .overdue-items {
+    padding: 0.3rem;
+    height: 160px; /* Slightly smaller height on medium screens */
+  }
+  .metrics-title {
+    font-size: 0.8rem;
+  }
+  .metrics-row {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-title {
+    font-size: 0.75rem;
+  }
+  .metrics-row {
+    font-size: 0.7rem;
+  }
+  .task-name {
+    max-width: 60%;
+  }
+}
+
+/* TimeMetrics.css */
+.time-metrics {
+  height: 180px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+}
+
+.priority-tasks {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.metrics-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+  flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.priority-content {
+  flex-grow: 1; /* Allow content area to grow and fill available space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.priority-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.priority-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.task-priority {
+  font-weight: 500;
+  color: #d32f2f;
+}
+
+.task-name {
+  font-weight: 500;
+  color: #333;
+  display: block;
+  font-size: 14px;
+}
+
+.task-assignee,
+.task-status {
+  font-size: 12px;
+  color: #777;
+  display: block;
+}
+
+.no-priority-tasks {
+  font-size: 14px;
+  color: #777;
+  font-style: italic;
+  padding: 8px;
+}
+
+/* Custom scrollbar styling */
+.priority-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.priority-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.priority-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.priority-content::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}

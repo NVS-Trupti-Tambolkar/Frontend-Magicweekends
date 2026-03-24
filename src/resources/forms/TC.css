@@ -1,0 +1,274 @@
+/* .table-container {
+  padding: 20px;
+  width: 80%; 
+} */
+
+.table-header {
+  display: flex;
+  justify-content: space-between; /* Pushes title to left and actions to right */
+  align-items: center; /* Vertically centers title and icons */
+  margin-bottom: 15px;
+}
+
+.tc-table-title {
+  font-size: 24px; /* Matches h2 size */
+  font-weight: bold;
+  color: #333;
+  margin: 0; /* Remove default margins */
+}
+
+.tc-table {
+  width: 100%; /* Table takes full width of its container */
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  table-layout: auto; /* Allows table to adjust based on content */
+}
+
+/* Ensure all table cells are centered */
+.tc-table th,
+.tc-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center !important; /* Force horizontal centering */
+  vertical-align: middle !important; /* Force vertical centering */
+  color: black;
+}
+
+/* Ensure all content inside cells (text, links, etc.) is centered */
+.tc-table th *,
+.tc-table td * {
+  text-align: center !important; /* Force centering for nested elements */
+}
+
+/* Specific rule for links to ensure they are centered */
+.tc-table td a {
+  display: inline-block; /* Allows centering of the link */
+  width: 100%; /* Ensures link takes full cell width for centering */
+  text-align: center !important; /* Explicitly center the link text */
+  color: #007bff;
+  text-decoration: none;
+}
+
+.tc-table th {
+  background-color: #808080; /* Gray header background */
+  color: black; /* Black header text */
+  position: sticky; /* Keeps header in place if scrolling */
+  top: 0; /* Sticks to top when scrolling */
+  z-index: 1; /* Ensures header stays above content */
+}
+
+.tc-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tc-table a:hover {
+  text-decoration: underline;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.table-actions {
+  display: flex;
+  justify-content: flex-end; /* Aligns icons to the right */
+  align-items: center; /* Center icons vertically */
+  gap: 20px; /* Increased gap for spacing */
+}
+
+.action-icon {
+  font-size: 24px; /* Larger size */
+  cursor: pointer;
+  color: #333;
+  padding: 8px; /* Padding for larger clickable area */
+  border-radius: 4px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+.action-icon:hover {
+  color: #007bff;
+  background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000; 
+}
+
+/* Spinner Animation */
+/* .spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3; 
+  border-top: 5px solid #007bff; 
+  border-radius: 50%;
+  animation: spin 1s linear infinite; 
+} */
+
+/* Keyframes for spinning animation */
+/* @keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} */
+
+/* Responsive Design */
+@media (max-width: 768px) { /* Tablet and Mobile */
+  .table-container {
+    padding: 10px;
+  }
+
+  .table-header {
+    flex-direction: column; /* Stack title and actions vertically */
+    align-items: flex-start; /* Align title to left */
+  }
+
+  .tc-table-title {
+    font-size: 20px; /* Slightly smaller title */
+    margin-bottom: 10px; /* Space between title and actions */
+  }
+
+  .tc-table {
+    font-size: 14px; /* Smaller font size for smaller screens */
+  }
+
+  .tc-table th,
+  .tc-table td {
+    padding: 6px; /* Reduced padding */
+    text-align: center !important; /* Re-enforce centering */
+    vertical-align: middle !important;
+  }
+
+  .tc-table td a {
+    width: 100%; /* Ensure link takes full width */
+  }
+
+  .table-actions {
+    gap: 15px; /* Slightly reduced gap */
+    justify-content: flex-end; /* Keep right alignment */
+    width: 100%; /* Ensure actions take full width for right alignment */
+  }
+
+  .action-icon {
+    font-size: 20px; /* Slightly smaller icons */
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) { /* Mobile */
+  .table-container {
+    padding: 5px; /* Further reduced padding for mobile */
+    overflow-x: auto; /* Enable horizontal scrolling for the entire container */
+  }
+
+  .table-header {
+    flex-direction: column; /* Stack title and actions */
+    align-items: flex-start; /* Align title to left */
+  }
+
+  .tc-table-title {
+    font-size: 18px; /* Smaller title */
+    margin-bottom: 8px;
+  }
+
+  .tc-table {
+    display: block; /* Stack table as block for mobile */
+    overflow-x: auto; /* Horizontal scroll for wide content */
+    white-space: nowrap; /* Prevent text wrapping */
+    min-width: 100%; /* Ensure table takes at least full width */
+    border: 1px solid #ddd; /* Ensure table border is visible */
+  }
+
+  .tc-table th,
+  .tc-table td {
+    min-width: 100px; /* Minimum width to ensure readability */
+    padding: 4px; /* Further reduced padding */
+    font-size: 12px; /* Even smaller font */
+    text-align: center !important; /* Re-enforce centering */
+    vertical-align: middle !important;
+    border: 1px solid #ddd; /* Ensure borders are consistent */
+  }
+
+  .tc-table th {
+    background-color: #808080; /* Re-enforce header background */
+    position: static; /* Remove sticky on mobile to avoid overflow issues */
+  }
+
+  .tc-table td a {
+    width: 100%; /* Ensure link takes full width */
+  }
+
+  .table-actions {
+    flex-direction: row; /* Keep icons horizontal on mobile */
+    gap: 10px;
+    justify-content: flex-end; /* Align icons to right */
+    width: 100%; /* Full width for right alignment */
+  }
+
+  .action-icon {
+    font-size: 18px; /* Smaller icons */
+    padding: 5px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) { /* Tablet */
+  .tc-table-title {
+    font-size: 22px; /* Slightly smaller title */
+  }
+
+  .tc-table th,
+  .tc-table td {
+    padding: 7px; /* Slightly reduced padding */
+    font-size: 15px; /* Slightly smaller font */
+    text-align: center !important; /* Re-enforce centering */
+    vertical-align: middle !important;
+  }
+
+  .tc-table td a {
+    width: 100%; /* Ensure link takes full width */
+  }
+
+  .action-icon {
+    font-size: 22px; /* Slightly smaller icons */
+  }
+
+  .table-actions {
+    justify-content: flex-end; /* Keep right alignment */
+  }
+}
+
+@media (min-width: 1025px) { /* Laptop and Desktop */
+  .tc-table-title {
+    font-size: 24px; /* Default title size */
+  }
+
+  .tc-table th,
+  .tc-table td {
+    padding: 8px; /* Default padding */
+    font-size: 16px; /* Default font size */
+    text-align: center !important; /* Re-enforce centering */
+    vertical-align: middle !important;
+  }
+
+  .tc-table td a {
+    width: 100%; /* Ensure link takes full width */
+  }
+
+  .table-actions {
+    justify-content: flex-end; /* Keep right alignment */
+  }
+}
