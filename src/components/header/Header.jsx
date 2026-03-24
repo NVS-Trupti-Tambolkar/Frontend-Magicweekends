@@ -186,11 +186,13 @@ const Header = ({ scrolled }) => {
 
 
 
-          <a onClick={() => navigate('/my-bookings')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
-            }`}>
-            <span className="text-sm lg:text-base">My Bookings</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
+          {user && (
+            <a onClick={() => navigate('/my-bookings')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
+              }`}>
+              <span className="text-sm lg:text-base">My Bookings</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+          )}
 
           {/* User Info & Logout */}
           {user ? (
@@ -364,15 +366,17 @@ const Header = ({ scrolled }) => {
 
 
 
-              <a onClick={() => navigate('/my-bookings')} className="block text-white hover:text-yellow-400 transition-all duration-300 font-medium py-3 px-4 rounded-lg hover:bg-white/5 relative group overflow-hidden cursor-pointer">
-                <span className="relative z-10 flex items-center">
-                  <svg className="h-5 w-5 mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M6 16h.01"></path>
-                  </svg>
-                  My Bookings
-                </span>
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
-              </a>
+              {user && (
+                <a onClick={() => navigate('/my-bookings')} className="block text-white hover:text-yellow-400 transition-all duration-300 font-medium py-3 px-4 rounded-lg hover:bg-white/5 relative group overflow-hidden cursor-pointer">
+                  <span className="relative z-10 flex items-center">
+                    <svg className="h-5 w-5 mr-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M6 16h.01"></path>
+                    </svg>
+                    My Bookings
+                  </span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
+                </a>
+              )}
 
               {user && (
                 <div className="mt-4 pt-4 border-t border-white/10">

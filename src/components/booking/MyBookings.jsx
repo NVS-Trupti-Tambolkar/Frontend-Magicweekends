@@ -39,6 +39,12 @@ const MyBookings = () => {
     };
 
     useEffect(() => {
+        if (!loading && !user) {
+            navigate('/login');
+        }
+    }, [user, loading, navigate]);
+
+    useEffect(() => {
         if (user) fetchBookings();
     }, [user, isAdmin]);
 
