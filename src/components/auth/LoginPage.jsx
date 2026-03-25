@@ -227,7 +227,7 @@ const LoginPage = () => {
                 </p>
 
                 <p className="text-center mt-6 text-gray-500 text-xs">
-                    © 2024 MAGIC WEEKENDS. All rights reserved.
+                    © {new Date().getFullYear()} MAGIC WEEKENDS. All rights reserved.
                 </p>
             </div>
 

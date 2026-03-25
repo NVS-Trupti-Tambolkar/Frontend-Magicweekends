@@ -116,7 +116,7 @@ const Footer = () => {
               Explore Our Tours
             </a>
             <p className="text-gray-400 text-sm">
-              Online booking system by Vacation Labs |© 2025, Maharashtra Gadkille
+              Online booking system by Vacation Labs |© {new Date().getFullYear()}, Maharashtra Gadkille
             </p>
           </div>
         </div>

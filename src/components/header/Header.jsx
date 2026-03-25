@@ -254,7 +254,14 @@ const Header = ({ scrolled }) => {
                 LOGOUT
               </button>
             </div>
-          ) : null}
+          ) : (
+            <button
+              onClick={() => navigate('/login')}
+              className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-6 py-2 rounded-lg shadow-lg shadow-yellow-500/30 active:scale-95 transition-all duration-300 text-xs font-bold tracking-wider ml-4"
+            >
+              LOGIN
+            </button>
+          )}
         </nav>
 
         {/* Mobile menu button - Visible only on mobile */}
@@ -278,7 +285,7 @@ const Header = ({ scrolled }) => {
       {/* Mobile menu - Visible only on mobile */}
       {isMenuOpen && (
         <div
-          className="md:hidden mt-4 rounded-lg overflow-hidden z-50"
+          className="md:hidden mt-4 rounded-lg overflow-hidden z-50 text-white"
           style={{
             backdropFilter: 'blur(20px)',
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -288,9 +295,9 @@ const Header = ({ scrolled }) => {
         >
           <div className="p-4">
             {!user && (
-              <>
+              <div className="flex flex-col gap-4 mb-6">
                 {/* Search bar for mobile */}
-                <div className="relative w-full mb-6">
+                <div className="relative w-full">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -316,13 +323,21 @@ const Header = ({ scrolled }) => {
                   </button>
                 </div>
 
-                <div className="flex items-center mb-6 p-3 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10">
+                {/* Mobile Login Button */}
+                <button
+                  onClick={() => { setIsMenuOpen(false); navigate('/login'); }}
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 py-3 rounded-lg font-bold text-sm shadow-lg shadow-yellow-500/20 active:scale-95 transition-all"
+                >
+                  LOGIN TO MY ACCOUNT
+                </button>
+
+                <div className="flex items-center p-3 bg-white/5 rounded-lg backdrop-blur-sm border border-white/10">
                   <svg className="h-5 w-5 mr-3 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                   </svg>
                   <span className="text-yellow-300 text-sm font-medium">91 9011234179</span>
                 </div>
-              </>
+              </div>
             )}
 
             <div className="space-y-2">
