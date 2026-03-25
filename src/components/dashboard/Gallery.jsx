@@ -397,7 +397,7 @@ const Gallery = ({ onLoad }) => {
     if (loading && !onLoad) return <PageLoader />;
 
     return (
-        <section id="gallery" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white min-h-screen">
+        <section id="gallery" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white">
             {updating && <OverlayLoader message={updateMessage} />}
             <div className="max-w-8xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-center mb-8 md:mb-12">

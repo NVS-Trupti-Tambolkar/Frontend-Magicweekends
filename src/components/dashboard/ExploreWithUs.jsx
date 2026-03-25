@@ -539,7 +539,7 @@ const ExploreWithUs = ({ onLoad }) => {
     if (loading && !onLoad) return <PageLoader />;
 
     return (
-        <section id="explore" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white min-h-screen">
+        <section id="explore" className="py-8 sm:py-12 px-4 sm:px-6 md:px-12 bg-white">
             {updating && <OverlayLoader message={updateMessage} />}
             <div className="max-w-8xl mx-auto">
                 {/* Header */}

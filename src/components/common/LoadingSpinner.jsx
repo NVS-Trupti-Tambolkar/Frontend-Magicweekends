@@ -62,17 +62,19 @@ export const PremiumDoubleRing = ({ size = 'md' }) => {
 
 // ─── Full Page Loader ──────────────────────────────────────────
 export const PageLoader = ({ message = 'Loading' }) => (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/5 backdrop-blur-xl z-[9999] animate-fadeIn">
+    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-xl z-[9999] animate-fadeIn p-6 text-center">
         <div className="relative mb-10">
             {/* Radial glow background */}
-            <div className="absolute inset-[-60px] bg-amber-500/5 rounded-full blur-3xl animate-pulse"></div>
+            <div className="absolute inset-[-60px] bg-amber-500/10 rounded-full blur-3xl animate-pulse"></div>
             <PremiumDoubleRing size="lg" />
         </div>
         
-        <div className="flex flex-col items-center space-y-3">
-            <h2 className="text-white text-2xl font-black tracking-[0.3em] uppercase opacity-90 drop-shadow-md">{message}</h2>
+        <div className="flex flex-col items-center space-y-4 w-full max-w-sm">
+            <h2 className="text-white text-xl md:text-2xl font-black tracking-widest uppercase opacity-90 drop-shadow-lg leading-tight">
+                {message}
+            </h2>
             <div className="h-[2px] w-16 bg-gradient-to-r from-transparent via-amber-500 to-transparent"></div>
-            <p className="text-amber-500/80 text-xs font-bold uppercase tracking-[0.4em] animate-pulse">Magic Weekends</p>
+            <p className="text-amber-500/80 text-[10px] font-bold uppercase tracking-[0.3em] animate-pulse">Magic Weekends</p>
         </div>
     </div>
 );
