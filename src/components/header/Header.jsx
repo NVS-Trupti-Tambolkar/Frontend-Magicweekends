@@ -122,9 +122,9 @@ const Header = ({ scrolled }) => {
       <div className={`max-w-full mx-auto flex ${user ? 'flex-nowrap' : 'flex-wrap'} justify-between items-center`}>
         {/* Left section with logo and phone */}
         <div className="flex items-center flex-1">
-          <div className="flex items-center mr-4 lg:mr-8">
+          <div className="flex items-center mr-4 lg:mr-8 flex-shrink-0">
             <img src={logo} alt="Magic Weekends" className="h-10 sm:h-12 w-10 sm:w-12 mr-2 sm:mr-3 rounded-full shadow-md cursor-pointer border-2 border-white/20" onClick={() => navigate('/login')} />
-            <h1 className="text-lg sm:text-xl font-bold text-white cursor-pointer tracking-wider whitespace-nowrap" onClick={() => navigate('/login')}>MAGIC WEEKENDS</h1>
+            <h1 className="text-base sm:text-lg lg:text-xl font-bold text-white cursor-pointer tracking-wider whitespace-nowrap" onClick={() => navigate('/login')}>MAGIC WEEKENDS</h1>
           </div>
 
           {!user && (
@@ -160,99 +160,117 @@ const Header = ({ scrolled }) => {
           )}
         </div>
 
-        {/* Right section with navigation - Hidden on mobile, visible on tablet and desktop */}
-        <nav className="hidden md:flex space-x-4 lg:space-x-6 xl:space-x-8">
-          <a href="#" onClick={(e) => handleNavClick(e, 'home')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
-            }`}>
-            <span className="text-sm lg:text-base">Home</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#explore" onClick={(e) => handleNavClick(e, 'explore')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
-            }`}>
-            <span className="text-sm lg:text-base">Explore</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
-          <a href="#gallery" onClick={(e) => handleNavClick(e, 'gallery')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
-            }`}>
-            <span className="text-sm lg:text-base">Gallery</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
-
-          <a href="#weekend-trips" onClick={(e) => handleNavClick(e, 'weekend-trips')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
-            }`}>
-            <span className="text-sm lg:text-base whitespace-nowrap">Weekends Trips</span>
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
-          </a>
-
-
-
-          {user && (
-            <a onClick={() => navigate('/my-bookings')} className={`transition-all duration-300 font-medium relative group cursor-pointer ${scrolled ? 'text-white hover:text-yellow-300' : 'text-white'
-              }`}>
-              <span className="text-sm lg:text-base">My Bookings</span>
+        {/* Right section with navigation - Hidden on mobile, visible on desktop */}
+        <nav className="hidden lg:flex items-center gap-x-4 xl:gap-x-8">
+          <div className="flex items-center gap-x-4 xl:gap-x-6">
+            <a href="#" onClick={(e) => handleNavClick(e, 'home')} className="transition-all duration-300 font-medium relative group cursor-pointer text-white">
+              <span className="text-xs lg:text-sm xl:text-base">Home</span>
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
             </a>
-          )}
+            <a href="#explore" onClick={(e) => handleNavClick(e, 'explore')} className="transition-all duration-300 font-medium relative group cursor-pointer text-white">
+              <span className="text-xs lg:text-sm xl:text-base">Explore</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="#gallery" onClick={(e) => handleNavClick(e, 'gallery')} className="transition-all duration-300 font-medium relative group cursor-pointer text-white">
+              <span className="text-xs lg:text-sm xl:text-base">Gallery</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            <a href="#weekend-trips" onClick={(e) => handleNavClick(e, 'weekend-trips')} className="transition-all duration-300 font-medium relative group cursor-pointer text-white">
+              <span className="text-xs lg:text-sm xl:text-base whitespace-nowrap">Weekends Trips</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
+            </a>
+            {user && (
+              <a onClick={() => navigate('/my-bookings')} className="transition-all duration-300 font-medium relative group cursor-pointer text-white">
+                <span className="text-xs lg:text-sm xl:text-base whitespace-nowrap">My Bookings</span>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-yellow-500 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            )}
+          </div>
 
-          {/* User Info & Logout */}
+          {/* User Info & Profile Dropdown */}
           {user ? (
-            <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/20">
-              {/* User Dropdown Trigger */}
+            <div className="flex items-center ml-2 xl:ml-4 pl-2 xl:pl-4 border-l border-white/20">
               <div className="relative">
                 <div 
-                  className={`flex items-center gap-2 cursor-pointer py-1 px-2 rounded-lg transition-all duration-300 ${isDropdownOpen.profile ? 'bg-white/10' : 'hover:bg-white/5'}`}
+                  className={`flex items-center gap-2 cursor-pointer py-1.5 px-3 rounded-full transition-all duration-300 border border-transparent shadow-sm ${isDropdownOpen.profile ? 'bg-white/15 border-white/20' : 'hover:bg-white/10 hover:border-white/10'}`}
                   onClick={() => toggleDropdown('profile')}
                   onMouseEnter={() => handleDropdownMouseEnter('profile')}
                   onMouseLeave={() => handleDropdownMouseLeave('profile')}
                 >
-                  <div className="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-black font-bold text-sm shadow-sm">
+                  <div className="w-7 h-7 xl:w-8 xl:h-8 rounded-full bg-gradient-to-tr from-yellow-400 to-yellow-600 flex items-center justify-center text-black font-bold text-xs xl:text-sm shadow-md border border-white/30">
                     {user.username.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-sm text-white font-medium hover:text-yellow-400 transition-colors">
+                  <span className="hidden sm:inline text-xs xl:text-sm text-white font-bold tracking-tight">
                     {user.username}
                   </span>
-                  <svg className={`h-4 w-4 text-gray-400 transition-transform duration-300 ${isDropdownOpen.profile ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                  <svg className={`h-3.5 w-3.5 xl:h-4 xl:w-4 text-white/70 transition-transform duration-300 ${isDropdownOpen.profile ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path>
                   </svg>
                 </div>
 
                 {/* Profile Dropdown Menu */}
                 {isDropdownOpen.profile && (
                   <div 
-                    className="absolute right-0 mt-2 w-48 bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden z-[60] animate-in fade-in zoom-in duration-200"
+                    className="absolute right-0 mt-2 w-56 bg-black/95 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-[60] animate-in fade-in zoom-in duration-200"
                     onMouseEnter={() => handleDropdownMouseEnter('profile')}
                     onMouseLeave={() => handleDropdownMouseLeave('profile')}
                   >
                     <div className="p-4 border-b border-white/10 bg-white/5">
-                      <p className="text-[10px] text-yellow-500 font-bold uppercase tracking-widest">Logged in as</p>
-                      <p className="text-sm text-white font-bold truncate">{user.username}</p>
-                      <p className="text-[10px] text-gray-400 capitalize">{user.role}</p>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-9 h-9 rounded-full bg-yellow-500 flex items-center justify-center text-black font-bold border border-white/20">
+                          {user.username.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex flex-col overflow-hidden">
+                          <p className="text-sm text-white font-bold truncate">{user.username}</p>
+                          <p className="text-[10px] text-yellow-500/80 font-bold uppercase tracking-wider">{user.role}</p>
+                        </div>
+                      </div>
                     </div>
                     
-                    <div className="p-2">
+                    <div className="p-2 space-y-1">
                       {user.role === 'admin' && (
                         <button 
                           onClick={() => { setIsDropdownOpen(prev => ({...prev, profile: false})); navigate('/register'); }}
-                          className="w-full text-left flex items-center gap-3 px-3 py-2 text-xs text-white hover:bg-yellow-500 hover:text-black rounded-lg transition-all group"
+                          className="w-full text-left flex items-center gap-3 px-3 py-2.5 text-xs text-white hover:bg-white/10 rounded-xl transition-all group"
                         >
-                          <svg className="h-4 w-4 text-yellow-500 group-hover:text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                          </svg>
-                          CREATE USER
+                          <div className="p-1.5 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/40 transition-colors">
+                            <svg className="h-4 w-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                            </svg>
+                          </div>
+                          MANAGE USERS
                         </button>
                       )}
+                      
+                      <button 
+                        onClick={() => { setIsDropdownOpen(prev => ({...prev, profile: false})); navigate('/my-bookings'); }}
+                        className="w-full text-left flex items-center gap-3 px-3 py-2.5 text-xs text-white hover:bg-white/10 rounded-xl transition-all group"
+                      >
+                        <div className="p-1.5 bg-yellow-500/20 rounded-lg group-hover:bg-yellow-500/40 transition-colors">
+                          <svg className="h-4 w-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                          </svg>
+                        </div>
+                        MY BOOKINGS
+                      </button>
+
+                      <div className="h-px bg-white/10 my-1 mx-2"></div>
+
+                      <button 
+                        onClick={logout}
+                        className="w-full text-left flex items-center gap-3 px-3 py-2.5 text-xs text-red-400 hover:bg-red-500/10 rounded-xl transition-all group"
+                      >
+                        <div className="p-1.5 bg-red-500/20 rounded-lg group-hover:bg-red-500/40 transition-colors">
+                          <svg className="h-4 w-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                          </svg>
+                        </div>
+                        SIGN OUT
+                      </button>
                     </div>
                   </div>
                 )}
               </div>
-
-              {/* Logout Button (Red - Solid) */}
-              <button
-                onClick={logout}
-                className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg shadow-lg shadow-red-600/30 active:scale-95 transition-all duration-300 text-xs font-bold tracking-wider"
-              >
-                LOGOUT
-              </button>
             </div>
           ) : (
             <button
@@ -395,29 +413,29 @@ const Header = ({ scrolled }) => {
 
               {user && (
                 <div className="mt-4 pt-4 border-t border-white/10">
-                  <div className="flex items-center justify-between p-3 bg-red-500/5 rounded-lg border border-red-500/10">
+                  <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-yellow-500 flex items-center justify-center text-black font-bold text-lg shadow-sm">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-yellow-400 to-yellow-600 flex items-center justify-center text-black font-bold text-xl shadow-lg border border-white/20">
                         {user.username.charAt(0).toUpperCase()}
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm text-white font-bold">{user.username}</span>
-                        <span className="text-[10px] text-gray-400 capitalize">{user.role}</span>
+                        <span className="text-[10px] text-yellow-500 font-bold uppercase tracking-wider">{user.role}</span>
                         {user.role === 'admin' && (
                           <button 
                             onClick={() => { setIsMenuOpen(false); navigate('/register'); }}
-                            className="text-[10px] text-yellow-500 hover:text-yellow-400 underline underline-offset-2 transition-all mt-1 w-fit"
+                            className="text-[10px] text-blue-400 hover:text-blue-300 underline underline-offset-2 transition-all mt-1 w-fit font-bold"
                           >
-                            Create New User
+                            Add New User
                           </button>
                         )}
                       </div>
                     </div>
                     <button
                       onClick={logout}
-                      className="text-xs bg-red-500 text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-red-500/20 active:scale-95 transition-all"
+                      className="bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/30 px-4 py-2 rounded-xl transition-all duration-300 text-[10px] font-bold tracking-widest uppercase"
                     >
-                      LOGOUT
+                      Logout
                     </button>
                   </div>
                 </div>
